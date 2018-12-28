@@ -1,3 +1,44 @@
-li {
-	color: red;
+body {
+	background-color: rgb(5, 5, 5);
 }
+
+#container {
+	background-color: rgb(5, 5, 5);
+}
+
+#header {
+	position: relative;
+	left: 5em;
+	height: 170px;
+	width: 75%;
+	margin: 0;
+	
+	background-image: linear-gradient(to bottom left, rgb(100, 100, 100), rgb(230, 230, 230));
+	color: rgb(221, 63, 180);
+}
+
+#title {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	
+	height: 100px;
+	width: 24em;	
+
+	
+	border-style: solid;
+	background-color: rgb(5, 5, 5);
+	border-color: rgb(221, 63, 180);
+	color: rgb(221, 63, 180);
+}
+
+#content {
+	height: 30em;
+	width: 30em;
+
+	position: absolute;
+	right: 9.5em;
+	top: 5em;
+	background-image: linear-gradient(to top right, rgb(100, 100, 100), rgb(230, 230, 230));
+}
+
