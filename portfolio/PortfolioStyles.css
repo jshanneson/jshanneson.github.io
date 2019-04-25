@@ -2,8 +2,11 @@
     color: deeppink;
 }
 
-h2{
+h2 {
     color: white;
+}
+p {
+	color: white;
 }
 
 body {
@@ -100,6 +103,96 @@ body {
     margin: auto;
 }
 
+.popup2 {
+    display: none;
+    background: rgba(0,0,0,0.4);
+    cursor: pointer;
+
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+
+    position: fixed;
+    text-align: center;
+    z-index: 1;
+}
+.popup2 .center{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.popup2 > div {
+    background-color: rgb(0, 42, 82);
+    box-shadow: 0px 0px 60px 20px #555;
+    display: inline-block;
+    cursor: default;
+
+    margin: 20%;
+    padding: 20px;
+    width: 40%;
+}
+
+.popup3 {
+    display: none;
+    background: rgba(0,0,0,0.4);
+    cursor: pointer;
+
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+
+    position: fixed;
+    text-align: center;
+    z-index: 1;
+}
+.popup3 .center{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.popup3 > div {
+    background-color: rgb(0, 42, 82);
+    box-shadow: 0px 0px 60px 20px #555;
+    display: inline-block;
+    cursor: default;
+
+    margin: 20%;
+    padding: 20px;
+    width: 40%;
+}
+
+.popup4 {
+    display: none;
+    background: rgba(0,0,0,0.4);
+    cursor: pointer;
+
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+
+    position: fixed;
+    text-align: center;
+    z-index: 1;
+}
+.popup4 .center{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.popup4 > div {
+    background-color: rgb(0, 42, 82);
+    box-shadow: 0px 0px 60px 20px #555;
+    display: inline-block;
+    cursor: default;
+
+    margin: 20%;
+    padding: 20px;
+    width: 40%;
+}
+
 .leather {
     grid-column: 1;
 }
@@ -138,3 +231,6 @@ body {
     border-radius: 20px;
     padding: 10px;
 }
+
+
+
