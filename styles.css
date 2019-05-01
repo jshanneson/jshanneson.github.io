@@ -6,6 +6,7 @@ ul{
 }
 
 body {
+	font-family: Verdana, sans-serif;
     background-color: black;
     background-image: url(assets/Pencil.png);
     background-size: cover;
