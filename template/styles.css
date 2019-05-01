@@ -1,3 +1,6 @@
+a:link{
+	text-decoration: none;
+}
 h1 {
 	color: deeppink;
 }
@@ -29,7 +32,7 @@ body {
 
 .menuIcon {
 	grid-column: 1/7;
-	color: rgb(27, 116, 155);
+	color: rgb(23, 142, 195);
 }
 
 .menuItems {
@@ -37,6 +40,9 @@ body {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 2em;
+}
+.menuItem {
+	color: white;
 }
 
 .content {
