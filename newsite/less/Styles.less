@@ -2,11 +2,44 @@
 @purple: rgb(128, 0, 128);
 @blue: rgb(17, 106, 148);
 @lightBlue: rgb(26, 160, 220);
-@font: verdana, sans-serif;
+@font: verdanna, sans-serif;
 
 body{
+	margin: 0;
 	font-family: @font;
 	background: @backgroundColor;
 	color: @blue;
+}
+
+ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+h1{
+	color: @purple;
+	font-size: 6em;
+}
+header{
+	display: flex;
+	justify-content: space-between;
+	margin: 5% 0;
+}
+
+.hide-mobile{
+	display: none;
+}
+.logo{
+	width: 150px;
+}
+.container{
+	text-align: center;
+	padding: 0 70px;
+}
+.aboutMe{
+	margin: 0;
+	background-image: url(assets/camp.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
