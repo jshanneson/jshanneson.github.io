@@ -9,6 +9,7 @@ h1 {
 	color: white;
 }
 body {
+	padding: 0 30px;
 	font-family: verdana, sans-serif;
 	background-color: rgb(55,55,55);
 	color: white;
@@ -20,9 +21,11 @@ body {
 }
 
 .grid {
-	max-width: 1000px;
+	width: 1000px;
+	height: 100vh;
     display:grid;
     grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: 10% auto 50px;
     grid-gap: 8px;
 }
 .grid > div {
