@@ -1,7 +1,7 @@
 {
 "companyName": "DefaultCompany",
 "productName": "Juggler_game1",
-"productVersion": "0.1",
+"productVersion": "0.2",
 "dataUrl": "WebGL exports.data.unityweb",
 "wasmCodeUrl": "WebGL exports.wasm.code.unityweb",
 "wasmFrameworkUrl": "WebGL exports.wasm.framework.unityweb",
