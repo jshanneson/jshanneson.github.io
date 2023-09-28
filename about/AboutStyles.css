@@ -22,12 +22,12 @@ body {
 
 #Paragraph {
     background-color: rgba(50, 50, 50, 0.7);
-    width: 20em;
+    width: 40em;
     padding: 3px 20px;
     box-shadow: 10px 10px 5px rgb(25, 25, 25);
 
     color: white;
-    font-size: 140%;
+    font-size: 100%;
 }
 
 .menuItem {
