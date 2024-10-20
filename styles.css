@@ -2,7 +2,7 @@
 :root {
     /*dimensions*/
     --header-height: 5.5rem;
-    --header-height-mobile: 3rem;
+    --header-height-mobile: 2.4rem;
 
     /*colours*/
     --primary-color: #118EFF;
@@ -150,7 +150,7 @@ a{
         margin: 0 0 var(--header-height-mobile) 0;
     }
     .icon {
-        height: 1.5rem;
+        height: 1.6rem;
     }
     /*profile picture*/
     #profilePic {
@@ -216,7 +216,7 @@ a{
         margin: var(--header-height) 0 0 0;
     }
     .icon {
-        height: 4.5rem;
+        height: 4rem;
     }
     .contentWrapper {
         margin: 0 10%;
