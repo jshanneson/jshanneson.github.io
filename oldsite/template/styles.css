@@ -1,0 +1,64 @@
+a:link{
+	text-decoration: none;
+}
+h1 {
+	color: deeppink;
+}
+::selection {
+	background: deeppink;
+	color: white;
+}
+body {
+	padding: 0 30px;
+	font-family: verdana, sans-serif;
+	background-color: rgb(55,55,55);
+	color: white;
+
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	text-align: center;
+}
+
+.grid {
+	width: 1000px;
+	height: 100vh;
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: 10% auto 50px;
+    grid-gap: 8px;
+}
+.grid > div {
+	border-radius: 20px;
+}
+
+.menuIcon {
+	border-radius: 20px;
+	grid-column: 1/6;
+	color: rgb(23, 142, 195);
+}
+.menuIcon:hover {
+	background-color: rgb(0,6,48);
+    box-shadow: 0px 0px 20px 7px rgb(255, 0, 187);
+}
+
+.menuItems {
+	grid-column: 6/13;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 8px;
+}
+.menuItem {
+	border-radius: 20px;
+	color: white;
+	padding: 0 6px;
+}
+.menuItem:hover {
+	background-color: rgb(0,6,48);
+    box-shadow: 0px 0px 20px 7px rgb(255, 0, 187);
+}
+
+.content {
+	grid-column: 1/13;
+	background-color: rgb(0,6,48);
+}
