@@ -2,7 +2,7 @@
 :root {
     /*dimensions*/
     --header-height: 5.5rem;
-    --header-height-mobile: 4rem;
+    --header-height-mobile: 3rem;
 
     /*colours*/
     --primary-color: #118EFF;
@@ -59,7 +59,6 @@ a{
     background-color: var(--bg-primary);
 }
 .icon {
-    height: 2.5rem;
     margin: 0;
     }
 .blueIcon {
@@ -150,7 +149,9 @@ a{
     body {
         margin: 0 0 var(--header-height-mobile) 0;
     }
-
+    .icon {
+        height: 1.5rem;
+    }
     /*profile picture*/
     #profilePic {
         max-width: 45%;
@@ -213,6 +214,9 @@ a{
 @media only screen and (min-width: 981px) {
     body {
         margin: var(--header-height) 0 0 0;
+    }
+    .icon {
+        height: 4.5rem;
     }
     .contentWrapper {
         margin: 0 10%;
