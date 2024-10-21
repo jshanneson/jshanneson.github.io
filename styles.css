@@ -176,6 +176,7 @@ a{
     }
     .qr {
         height: 6.5rem;
+        width: auto;
         margin-left: 1.5rem;
 
     }
