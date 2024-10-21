@@ -252,6 +252,9 @@ a{
         gap: 1.5rem;
     }
     #contentText {order:2;}
+    .socials {
+        display: flex;
+    }
     .navbar {
         height: var(--header-height);
         top: 0;
