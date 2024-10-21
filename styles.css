@@ -2,7 +2,7 @@
 :root {
     /*dimensions*/
     --header-height: 5.5rem;
-    --header-height-mobile: 2.4rem;
+    --header-height-mobile: 2.6rem;
 
     /*colours*/
     --primary-color: #118EFF;
@@ -150,7 +150,7 @@ a{
         margin: 0 0 var(--header-height-mobile) 0;
     }
     .icon {
-        height: 1.6rem;
+        height: 1.8rem;
     }
     /*profile picture*/
     #profilePic {
@@ -174,7 +174,7 @@ a{
     .navbar {
         height: var(--header-height-mobile);
         bottom: 0;
-        filter: drop-shadow(0 -1rem 2rem black);
+        filter: drop-shadow(0 0.2rem 0.7rem rgb(98, 98, 98));
     }
     .navbar-nav {
         padding: 0;
@@ -248,7 +248,7 @@ a{
     .navbar {
         height: var(--header-height);
         top: 0;
-        filter: drop-shadow(0 1em 2em black);
+        filter: drop-shadow(0 0.2em 0.2em rgb(98, 98, 98));
     }
     .navbar-nav {
         display: flex;
