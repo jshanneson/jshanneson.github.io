@@ -15,7 +15,7 @@
     --normal-font-size: 1rem;
     --tiny-font-size: .65rem;  
 }
-@media only screen and (min-width: 981px){
+@media only screen and (min-width: 1000px){
     /*Variable CSS*/
     :root {
         --h1-font-size: 3.25rem;
@@ -145,7 +145,7 @@ a{
 
 
 /*MOBILE DESIGN*/
-@media only screen and (max-width: 981px) {
+@media only screen and (max-width: 1000px) {
     body {
         margin: 0 0 var(--header-height-mobile) 0;
     }
@@ -157,7 +157,7 @@ a{
         max-width: 45%;
         display: block;
         margin: 1.5rem auto;
-        border:5px solid white;
+        border:5px solid rgb(223, 223, 223);
         border-radius: 50%;
     }
     .content {
@@ -211,7 +211,7 @@ a{
 }
 
 /*DESKTOP DESIGN*/
-@media only screen and (min-width: 981px) {
+@media only screen and (min-width: 1000px) {
     body {
         margin: var(--header-height) 0 0 0;
     }
@@ -227,7 +227,7 @@ a{
     /*profile picture*/
     #profilePic {
         max-width: 25%;
-        border:10px solid white;
+        border:10px solid rgb(223, 223, 223);
         border-radius: 50%;
     }
     .content {
