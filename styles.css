@@ -254,6 +254,7 @@ a{
     #contentText {order:2;}
     .socials {
         display: flex;
+        flex-direction: row;
     }
     .navbar {
         height: var(--header-height);
