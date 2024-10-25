@@ -7,7 +7,10 @@
     /*colours*/
     --primary-color: #118EFF;
     --primary-highlight-color: #8BC8FF;
+    --secondary-color: rgb(223, 223, 223);
     --bg-primary: whitesmoke;
+    --dark-color: #141619;
+    
 
     /*font info*/
     --h1-font-size: 1.6rem;
@@ -29,6 +32,15 @@ body {
     font-size: var(--normal-font-size);
 	font-family: Verdana, sans-serif;
     background-color: whitesmoke;
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-delay: 200ms;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 h1{
     font-size: var(--h1-font-size);
@@ -95,7 +107,7 @@ a{
 }
 .slideContainer {
     width: 100%;
-    background-color: rgb(223, 223, 223);
+    background-color: var(--secondary-color);
     padding: 2.5rem 0;
     display: flex;
     flex-flow: row;
@@ -143,6 +155,14 @@ a{
     margin: 0;
 }
 
+/*3D renderer*/
+#container3D{
+    width: 100vw;
+    height: 70vh;
+    background-color: var(--secondary-color);
+    display: none;
+}
+
 
 /*MOBILE DESIGN*/
 @media only screen and (max-width: 1000px) {
@@ -157,7 +177,7 @@ a{
         max-width: 45%;
         display: block;
         margin: 1.5rem auto;
-        border:5px solid rgb(223, 223, 223);
+        border:5px solid var(--secondary-color);
         border-radius: 50%;
     }
     .content {
@@ -182,6 +202,15 @@ a{
         height: var(--header-height-mobile);
         bottom: 0;
         filter: drop-shadow(0 0.2rem 0.7rem rgb(98, 98, 98));
+        transform: translateY(var(--header-height-mobile));
+        animation-name: slideUp;
+        animation-duration: 0.8s;
+        animation-fill-mode: forwards;
+        animation-delay: 200ms;
+    }
+    @keyframes slideUp {
+        0% { transform: translateY(var(--header-height-mobile)); }
+        100% { transform: translateY(0); }
     }
     .navbar-nav {
         padding: 0;
@@ -234,7 +263,7 @@ a{
     /*profile picture*/
     #profilePic {
         max-width: 25%;
-        border:10px solid rgb(223, 223, 223);
+        border:10px solid var(--secondary-color);
         border-radius: 50%;
     }
     .content {
