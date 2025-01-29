@@ -162,6 +162,11 @@ a{
     display: none;
 }
 
+.date {
+    font-style: italic;
+    margin-right: 2em;
+}
+
 
 /*MOBILE DESIGN*/
 @media only screen and (max-width: 1000px) {
