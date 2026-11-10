@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joshua Hanneson | Game Developer &amp; Launch Partner</title>
+  <meta name="description" content="Edmonton-based indie game developer with a shipped Steam release (300+ sales, 2,400+ wishlists). 3D art, music, programming and UX, plus help launching and marketing your game.">
+  <meta name="theme-color" content="#0A1222">
+  <meta property="og:title" content="Joshua Hanneson | Game Developer &amp; Launch Partner">
+  <meta property="og:description" content="I build games and help them find players.">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="https://YOUR-DOMAIN/images/og-card.jpg"> -->
+
+  <!-- Marks JS as available before first paint so entrance animations can start hidden.
+       If script.js never starts (blocked, error), the failsafe un-hides everything after 5s. -->
+  <script>
+    document.documentElement.classList.add('js');
+    setTimeout(function () {
+      if (!document.documentElement.getAttribute('data-anim')) document.documentElement.classList.add('no-anim');
+    }, 5000);
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+
+  <!--
+    IMAGE PLACEHOLDERS: drop files with these names into an /images folder.
+    Until then each slot shows a labelled placeholder.
+
+      ghostie-town-hero.png         (wide key art / screenshot, ~1600x900)
+      acorn-island.jpg  jam-jar-lid.jpg  hive.jpg
+      a-crabby-adventure.jpg  invending-doom.jpg  massacreade.jpg  stubbys-adventure.jpg   (~1280x800 each)
+      joshua-portrait.jpg           (square-ish, ~800x800)
+    Project-page images (ghostie-town-lowpoly.jpg, ghostie-town-greybox.jpg, etc.)
+    are named in projects.js.
+  -->
+</head>
+<body>
+  <div id="top"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Joshua Hanneson, back to top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" focusable="false">
+            <path d="M12 3c-3.9 0-7 3-7 6.9V20l2.3-1.8L9.7 20l2.3-1.8 2.3 1.8 2.4-1.8L19 20V9.9C19 6 15.9 3 12 3z" fill="#fff"/>
+            <circle cx="9.5" cy="10" r="1.3" fill="#41225E"/>
+            <circle cx="14.5" cy="10" r="1.3" fill="#41225E"/>
+          </svg>
+        </span>
+        <span class="brand-name">Joshua Hanneson</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Menu</span>
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#featured" data-also="work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#music">Music</a></li>
+          <li><a class="nav-cta" href="#contact">Work with me</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero>Game developer &middot; Edmonton, Alberta</p>
+          <h1 id="hero-title" data-hero="split">I build games and help them <span class="accent">find players.</span></h1>
+          <p class="lead" data-hero>
+            Indie developer with a game shipped on Steam. 3D art, music, programming and UX,
+            plus the launch and marketing work that turns a finished build into sales.
+          </p>
+          <div class="btn-row" data-hero>
+            <a class="btn btn-primary" href="#contact">Work with me</a>
+            <a class="btn btn-ghost" href="#featured">See my work</a>
+          </div>
+        </div>
+
+        <figure class="hero-media" data-hero="image">
+          <div class="media" data-label="ghostie-town-hero.png">
+            <img src="images/ghostie-town-hero.png" alt="A small ghost holding a broom in the lantern-lit streets of Ghostie Town" width="1600" height="900">
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECT -->
+    <section class="section" id="featured" aria-labelledby="featured-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Featured project</p>
+        <article class="feature" data-reveal>
+          <div class="media" data-label="ghostie-town-hero.png">
+            <img src="images/ghostie-town-hero.png" alt="Ghostie Town screenshot: a ghost sweeping a cobbled street beside lit lanterns" width="1600" height="900" loading="lazy">
+          </div>
+          <div class="feature-body">
+            <h2 id="featured-title"><a class="card-link" href="project.html?p=ghostie-town">Ghostie Town</a></h2>
+            <p class="feature-sub">A cozy restoration adventure on Steam</p>
+            <p>
+              You play a small ghost fixing up a forgotten town and helping its ghostie residents settle in.
+              I designed, built, scored and launched it on my own.
+            </p>
+
+            <ul class="feature-stats" aria-label="Ghostie Town solo launch results">
+              <li><span class="stat-num" data-count="15">15</span><span class="stat-label">months, solo</span></li>
+              <li><span class="stat-num" data-count="300" data-suffix="+">300+</span><span class="stat-label">copies sold</span></li>
+              <li><span class="stat-num" data-count="2400" data-suffix="+">2,400+</span><span class="stat-label">wishlists</span></li>
+              <li><span class="stat-num" data-count="20" data-suffix="+">20+</span><span class="stat-label">reviews</span></li>
+            </ul>
+
+            <div class="btn-row">
+              <a class="btn btn-accent" href="project.html?p=ghostie-town">Read the case study</a>
+              <a class="btn btn-outline" href="https://store.steampowered.com/app/4206880/Ghostie_Town/" target="_blank" rel="noopener">Play on Steam</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SELECTED WORK -->
+    <section class="section section-alt" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow">Selected work</p>
+          <h2 id="work-title">Games and jam projects</h2>
+          <p class="section-intro">Each project has its own page covering what I did and how.</p>
+        </header>
+
+        <div class="work-group">
+          <h3 class="group-title" data-reveal>Systems &amp; programming</h3>
+          <div class="carousel" data-carousel>
+            <div class="carousel-track cols-3" data-reveal-group>
+
+              <article class="card project">
+                <div class="media" data-label="acornIsland.png">
+                  <img src="images/acornIsland.png" alt="A squirrel exploring a low-poly island with trees and water in Acorn Island" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Personal project</p>
+                  <h3><a class="card-link" href="project.html?p=acorn-island">Acorn Island</a></h3>
+                  <p class="role">Everything solo, with procedural terrain and randomized item placement</p>
+                  <p class="blurb">Collect acorns on a procedurally generated island with mysterious ruins scattered throughout.</p>
+                </div>
+              </article>
+
+              <article class="card project">
+                <div class="media" data-label="jamJarLid.png">
+                  <img src="images/jamJarLid.png" alt="Jam Jar Lid screenshot of a jar of jam searching for its lid" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam</p>
+                  <h3><a class="card-link" href="project.html?p=jam-jar-lid">Jam Jar Lid</a></h3>
+                  <p class="role">3D art, programming, level design</p>
+                  <p class="blurb">You are a jar of jam... but you lost your jam jar lid! Better go find it...</p>
+                </div>
+              </article>
+
+              <article class="card project">
+                <div class="media" data-label="HIVE.png">
+                  <img src="images/HIVE.png" alt="HIVE screenshot of an ant invading a hive" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam &middot; Team</p>
+                  <h3><a class="card-link" href="project.html?p=hive">HIVE</a></h3>
+                  <p class="role">Enemy nav mesh movement and music</p>
+                  <p class="blurb">Play an ant warrior invading and conquering rival colonies in fast-paced hive battles.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-group">
+          <h3 class="group-title" data-reveal>Art &amp; level design</h3>
+          <div class="carousel" data-carousel>
+            <div class="carousel-track cols-4" data-reveal-group>
+
+              <article class="card project">
+                <div class="media" data-label="aCrabbyAdventure.png">
+                  <img src="images/aCrabbyAdventure.png" alt="A Crabby Adventure screenshot" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam</p>
+                  <h3><a class="card-link" href="project.html?p=a-crabby-adventure">A Crabby Adventure</a></h3>
+                  <p class="role">Level design, 2D and 3D art</p>
+                  <p class="blurb">This crab doesn&rsquo;t think it is better down where it&rsquo;s wetter, and wants to catch some sunshine up on the beach!</p>
+                </div>
+              </article>
+
+              <article class="card project">
+                <div class="media" data-label="invendingDoom.png">
+                  <img src="images/invendingDoom.png" alt="Invending Doom screenshot" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam &middot; Godot</p>
+                  <h3><a class="card-link" href="project.html?p=invending-doom">Invending Doom</a></h3>
+                  <p class="role">3D modeling and sound design</p>
+                  <p class="blurb">Play as a dinosaur collecting items as payment for a mysterious vending machine.</p>
+                </div>
+              </article>
+
+              <article class="card project">
+                <div class="media" data-label="massacrerade.png">
+                  <img src="images/massacrerade.png" alt="Massacreade screenshot" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam</p>
+                  <h3><a class="card-link" href="project.html?p=massacreade">Massacreade</a></h3>
+                  <p class="role">Level design and environment models</p>
+                  <p class="blurb">A hungry chameleon crashes a fancy bug ball and feasts on the other guests.</p>
+                </div>
+              </article>
+
+              <article class="card project">
+                <div class="media" data-label="stubbysAdventure.png">
+                  <img src="images/stubbysAdventure.png" alt="Stubby's Adventure 2D art" width="1280" height="800" loading="lazy">
+                </div>
+                <div class="project-body">
+                  <p class="badge">Game jam</p>
+                  <h3><a class="card-link" href="project.html?p=stubbys-adventure">Stubby&rsquo;s Adventure</a></h3>
+                  <p class="role">2D art</p>
+                  <p class="blurb">An alchemist shrinks himself and explores the woods for magical shards to reverse his curse.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow">Work with me</p>
+          <h2 id="services-title">Help getting your game launched and noticed</h2>
+          <p class="section-intro">I have shipped on Steam, run the marketing and handled the production work behind it. Small teams can borrow that experience for one clearly scoped piece of work.</p>
+        </header>
+
+        <div class="services-grid" data-reveal-group>
+          <article class="card">
+            <h3>Launch &amp; marketing plans</h3>
+            <p>Content cadence, wishlist goals, Next Fest timing, bundles and streamer outreach.</p>
+          </article>
+          <article class="card">
+            <h3>Steam page review</h3>
+            <p>An audit of capsule art, screenshots, tags and demo, with specific fixes.</p>
+          </article>
+          <article class="card">
+            <h3>Playtests &amp; feedback</h3>
+            <p>Virtual playtests turned into a short, prioritized list your team can act on.</p>
+          </article>
+          <article class="card">
+            <h3>Production &amp; craft</h3>
+            <p>Unity C#, low-poly 3D, VFX, music and foley, sprint planning and documentation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section section-alt" id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <figure class="about-media" data-reveal>
+          <div class="media media-square" data-label="joshua-portrait.jpg">
+            <img src="images/headShot.jpg" alt="Portrait of Joshua Hanneson" width="800" height="800" loading="lazy">
+          </div>
+        </figure>
+
+        <div class="about-copy" data-reveal>
+          <p class="eyebrow">About me</p>
+          <h2 id="about-title">A developer who ships, and can also help sell it</h2>
+          <p>
+            I&rsquo;m an Edmonton-based indie developer with a background in 3D modeling, music composition,
+            programming and UX design. I&rsquo;ve shipped several titles, including Acorn Island and A Crabby Adventure,
+            and released my first commercial game, Ghostie Town.
+          </p>
+          <p>
+            Before games I studied engineering, worked at two start-ups, designed websites and UX flows, wrote documentation
+            at a bank, made sales cold calls and managed students and contractors.
+          </p>
+          <ul class="chips" aria-label="Toolkit">
+            <li>Unity</li><li>C#</li><li>Godot</li><li>Blender</li><li>Maya</li><li>Git</li>
+            <li>Shaders &amp; VFX</li><li>Level design</li><li>UX</li><li>Agile &amp; kanban</li><li>Social content</li><li>Steam &amp; Next Fest</li>
+          </ul>
+          <div class="btn-row">
+            <!-- TODO: add resume.pdf next to index.html -->
+            <a class="btn btn-accent" href="resume.pdf" download>Download r&eacute;sum&eacute;</a>
+            <a class="btn btn-outline" href="https://www.linkedin.com/in/joshuahanneson" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUSIC -->
+    <section class="section" id="music" aria-labelledby="music-title">
+      <div class="container music-grid">
+        <div class="music-copy" data-reveal>
+          <p class="eyebrow">Music &amp; audio</p>
+          <h2 id="music-title">Music and sound made in-house</h2>
+          <p>
+            I&rsquo;m a vocal percussionist with High Street Sound, and I arrange, produce, mix and choreograph for a cappella groups.
+            I&rsquo;ve built a 45-minute live-looping solo set mixing piano, beatboxing and voice, and I play piano, trumpet and guitar.
+            In games, I compose the music and record the foley myself.
+          </p>
+          <div class="btn-row">
+            <!-- TODO: set your real links, then delete the hidden attribute -->
+            <a class="btn btn-outline" href="https://open.spotify.com/" target="_blank" rel="noopener" hidden>Spotify</a>
+          </div>
+        </div>
+
+        <div class="music-player" data-reveal>
+          <iframe id="music-frame" title="Track 1 on Spotify" width="100%" height="152" loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  src="https://open.spotify.com/embed/track/5skcllJyNHQGPRoxku27nt?utm_source=generator&amp;theme=0"></iframe>
+          <!-- Each button swaps the player to a Spotify track ID. To add a track, copy a button and change data-id. -->
+          <div class="track-picker" role="group" aria-label="Choose a track">
+            <button type="button" class="track-btn is-active" aria-pressed="true" data-id="5skcllJyNHQGPRoxku27nt">Track 1</button>
+            <button type="button" class="track-btn" aria-pressed="false" data-id="5ENRfpkM2BQthn0OP9FUIe">Track 2</button>
+            <button type="button" class="track-btn" aria-pressed="false" data-id="4lonfmt12bny2tlZqpt8Xt">Track 3</button>
+            <button type="button" class="track-btn" aria-pressed="false" data-id="2o4UbckcCH1fMmpGjvUi65">Track 4</button>
+            <button type="button" class="track-btn" aria-pressed="false" data-id="4fhIINK4etPAyKIKPdslJo">Track 5</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section-contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-copy" data-reveal>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Let&rsquo;s make your launch a good one.</h2>
+          <p>Tell me what you&rsquo;re working on and what kind of help would move it forward.</p>
+          <ul class="contact-links">
+            <li>
+              <a href="mailto:jshanneson@gmail.com">jshanneson@gmail.com</a>
+              <button type="button" class="copy-btn" data-copy="jshanneson@gmail.com">Copy</button>
+            </li>
+            <li><a href="https://www.linkedin.com/in/joshuahanneson" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://jshanneson.itch.io/" target="_blank" rel="noopener">itch.io</a></li>
+          </ul>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate data-reveal>
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required>
+
+          <label for="cf-topic">What do you need help with?</label>
+          <select id="cf-topic" name="topic">
+            <option>Launch &amp; marketing plan</option>
+            <option>Steam page review</option>
+            <option>Playtests &amp; feedback</option>
+            <option>Production or craft support</option>
+            <option>Something else</option>
+          </select>
+
+          <label for="cf-message">About your project</label>
+          <textarea id="cf-message" name="message" rows="4" required></textarea>
+
+          <button class="btn btn-primary" type="submit">Open email draft</button>
+          <p class="form-note" id="cf-note" role="status">This opens your email app with the message filled in.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year">2026</span> Joshua Hanneson. Edmonton, Alberta.</p>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
