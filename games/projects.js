@@ -122,7 +122,7 @@ window.PROJECTS = [
       ["Platform", "itch.io"]
     ],
     links: [
-      { label: "Play on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
+      { label: "Play on itch.io", url: "https://jshanneson.itch.io/acorn-island", primary: true }
     ],
     image: "images/acorn-island.png",
     imageAlt: "A squirrel exploring a low-poly island with trees and water",
@@ -174,7 +174,7 @@ window.PROJECTS = [
       ["Format", "Game jam"]
     ],
     links: [
-      { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
+      { label: "Play on itch.io", url: "https://bitshaper.itch.io/a-crabby-adventure", primary: true }
     ],
     image: "images/a-crabby-adventure.png",
     imageAlt: "A Crabby Adventure screenshot",
@@ -202,7 +202,8 @@ window.PROJECTS = [
       ["Format", "Game jam"]
     ],
     links: [
-      { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
+      /* TODO: add the Invending Doom itch.io page, e.g.
+         { label: "Play on itch.io", url: "https://...", primary: true } */
     ],
     image: "images/invending-doom.png",
     imageAlt: "Invending Doom screenshot",
@@ -227,7 +228,7 @@ window.PROJECTS = [
       ["Platform", "Browser"]
     ],
     links: [
-      { label: "Play in browser", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
+      { label: "Play on itch.io", url: "https://jshanneson.itch.io/jam-jar-lid", primary: true }
     ],
     image: "images/jam-jar-lid.png",
     imageAlt: "Jam Jar Lid screenshot",
@@ -251,7 +252,7 @@ window.PROJECTS = [
       ["Format", "Game jam, team project"]
     ],
     links: [
-      { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
+      { label: "Play on itch.io", url: "https://achyuthsr.itch.io/hive", primary: true }
     ],
     image: "images/hive.png",
     imageAlt: "HIVE screenshot of an ant invading a hive",
