@@ -9,7 +9,7 @@
   <meta property="og:title" content="Joshua Hanneson | Game Developer &amp; Launch Partner">
   <meta property="og:description" content="I build games and help them find players.">
   <meta property="og:type" content="website">
-  <!-- <meta property="og:image" content="https://YOUR-DOMAIN/images/og-card.jpg"> -->
+  <!-- <meta property="og:image" content="https://YOUR-DOMAIN/images/og-card.png"> -->
 
   <!-- Marks JS as available before first paint so entrance animations can start hidden.
        If script.js never starts (blocked, error), the failsafe un-hides everything after 5s. -->
@@ -26,11 +26,12 @@
     IMAGE PLACEHOLDERS: drop files with these names into an /images folder.
     Until then each slot shows a labelled placeholder.
 
-      ghostie-town-hero.png         (wide key art / screenshot, ~1600x900)
-      acorn-island.jpg  jam-jar-lid.jpg  hive.jpg
-      a-crabby-adventure.jpg  invending-doom.jpg  massacreade.jpg  stubbys-adventure.jpg   (~1280x800 each)
+      ghostie-town-hero.png         (wide key art / screenshot, ~1600x900; hero slide 1 and the featured card)
+      hero-2.png  hero-3.png  hero-4.png   (hero slideshow, ~1600x900; .gif also works, edit the src in the hero)
+      acorn-island.png  jam-jar-lid.png  hive.png
+      a-crabby-adventure.png  invending-doom.png   (~1280x800 each)
       joshua-portrait.jpg           (square-ish, ~800x800)
-    Project-page images (ghostie-town-lowpoly.jpg, ghostie-town-greybox.jpg, etc.)
+    Project-page images (ghostie-town-lowpoly.png, ghostie-town-greybox.png, etc.)
     are named in projects.js.
   -->
 </head>
@@ -58,10 +59,10 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
-          <li><a href="#featured" data-also="work">Work</a></li>
+          <li><a href="#featured">Featured</a></li>
+          <li><a href="#work">Work</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#music">Music</a></li>
           <li><a class="nav-cta" href="#contact">Work with me</a></li>
         </ul>
       </nav>
@@ -87,8 +88,34 @@
         </div>
 
         <figure class="hero-media" data-hero="image">
-          <div class="media" data-label="ghostie-town-hero.png">
-            <img src="images/ghostie-town-hero.png" alt="A small ghost holding a broom in the lantern-lit streets of Ghostie Town" width="1600" height="900">
+          <!-- HERO SLIDESHOW: 3-5 slides. Copy a .hero-slide block to add one, delete one to remove it.
+               Files go in /images. For a GIF just point src at the .gif (and update data-label).
+               The dots, arrows and timing are built by script.js from whatever slides are here. -->
+          <div class="hero-carousel" data-hero-carousel role="region" aria-roledescription="carousel" aria-label="Featured work">
+            <div class="hero-slides">
+            <div class="hero-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 4">
+              <div class="media" data-label="ghostie-town-hero.png">
+                <img src="images/ghostie-town-hero.png" alt="A small ghost holding a broom in the lantern-lit streets of Ghostie Town" width="1600" height="900">
+              </div>
+            </div>
+            <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="2 of 4">
+              <div class="media" data-label="hero-2.png">
+                <img src="images/hero-2.png" alt="TODO: describe image 2" width="1600" height="900" loading="lazy">
+              </div>
+            </div>
+            <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="3 of 4">
+              <div class="media" data-label="hero-3.png">
+                <img src="images/hero-3.png" alt="TODO: describe image 3" width="1600" height="900" loading="lazy">
+              </div>
+            </div>
+            <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="4 of 4">
+              <div class="media" data-label="hero-4.png">
+                <img src="images/hero-4.png" alt="TODO: describe image 4" width="1600" height="900" loading="lazy">
+              </div>
+            </div>
+            </div>
+            <button class="hc-arrow hc-prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="hc-arrow hc-next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </figure>
       </div>
@@ -141,8 +168,8 @@
             <div class="carousel-track cols-3" data-reveal-group>
 
               <article class="card project">
-                <div class="media" data-label="acornIsland.png">
-                  <img src="images/acornIsland.png" alt="A squirrel exploring a low-poly island with trees and water in Acorn Island" width="1280" height="800" loading="lazy">
+                <div class="media" data-label="acorn-island.png">
+                  <img src="images/acorn-island.png" alt="A squirrel exploring a low-poly island with trees and water in Acorn Island" width="1280" height="800" loading="lazy">
                 </div>
                 <div class="project-body">
                   <p class="badge">Personal project</p>
@@ -153,8 +180,8 @@
               </article>
 
               <article class="card project">
-                <div class="media" data-label="jamJarLid.png">
-                  <img src="images/jamJarLid.png" alt="Jam Jar Lid screenshot of a jar of jam searching for its lid" width="1280" height="800" loading="lazy">
+                <div class="media" data-label="jam-jar-lid.png">
+                  <img src="images/jam-jar-lid.png" alt="Jam Jar Lid screenshot of a jar of jam searching for its lid" width="1280" height="800" loading="lazy">
                 </div>
                 <div class="project-body">
                   <p class="badge">Game jam</p>
@@ -165,8 +192,8 @@
               </article>
 
               <article class="card project">
-                <div class="media" data-label="HIVE.png">
-                  <img src="images/HIVE.png" alt="HIVE screenshot of an ant invading a hive" width="1280" height="800" loading="lazy">
+                <div class="media" data-label="hive.png">
+                  <img src="images/hive.png" alt="HIVE screenshot of an ant invading a hive" width="1280" height="800" loading="lazy">
                 </div>
                 <div class="project-body">
                   <p class="badge">Game jam &middot; Team</p>
@@ -182,11 +209,11 @@
         <div class="work-group">
           <h3 class="group-title" data-reveal>Art &amp; level design</h3>
           <div class="carousel" data-carousel>
-            <div class="carousel-track cols-4" data-reveal-group>
+            <div class="carousel-track cols-3" data-reveal-group>
 
               <article class="card project">
-                <div class="media" data-label="aCrabbyAdventure.png">
-                  <img src="images/aCrabbyAdventure.png" alt="A Crabby Adventure screenshot" width="1280" height="800" loading="lazy">
+                <div class="media" data-label="a-crabby-adventure.png">
+                  <img src="images/a-crabby-adventure.png" alt="A Crabby Adventure screenshot" width="1280" height="800" loading="lazy">
                 </div>
                 <div class="project-body">
                   <p class="badge">Game jam</p>
@@ -197,8 +224,8 @@
               </article>
 
               <article class="card project">
-                <div class="media" data-label="invendingDoom.png">
-                  <img src="images/invendingDoom.png" alt="Invending Doom screenshot" width="1280" height="800" loading="lazy">
+                <div class="media" data-label="invending-doom.png">
+                  <img src="images/invending-doom.png" alt="Invending Doom screenshot" width="1280" height="800" loading="lazy">
                 </div>
                 <div class="project-body">
                   <p class="badge">Game jam &middot; Godot</p>
@@ -208,29 +235,7 @@
                 </div>
               </article>
 
-              <article class="card project">
-                <div class="media" data-label="massacrerade.png">
-                  <img src="images/massacrerade.png" alt="Massacreade screenshot" width="1280" height="800" loading="lazy">
-                </div>
-                <div class="project-body">
-                  <p class="badge">Game jam</p>
-                  <h3><a class="card-link" href="project.html?p=massacreade">Massacreade</a></h3>
-                  <p class="role">Level design and environment models</p>
-                  <p class="blurb">A hungry chameleon crashes a fancy bug ball and feasts on the other guests.</p>
-                </div>
-              </article>
 
-              <article class="card project">
-                <div class="media" data-label="stubbysAdventure.png">
-                  <img src="images/stubbysAdventure.png" alt="Stubby's Adventure 2D art" width="1280" height="800" loading="lazy">
-                </div>
-                <div class="project-body">
-                  <p class="badge">Game jam</p>
-                  <h3><a class="card-link" href="project.html?p=stubbys-adventure">Stubby&rsquo;s Adventure</a></h3>
-                  <p class="role">2D art</p>
-                  <p class="blurb">An alchemist shrinks himself and explores the woods for magical shards to reverse his curse.</p>
-                </div>
-              </article>
             </div>
           </div>
         </div>
@@ -256,10 +261,6 @@
             <p>An audit of capsule art, screenshots, tags and demo, with specific fixes.</p>
           </article>
           <article class="card">
-            <h3>Playtests &amp; feedback</h3>
-            <p>Virtual playtests turned into a short, prioritized list your team can act on.</p>
-          </article>
-          <article class="card">
             <h3>Production &amp; craft</h3>
             <p>Unity C#, low-poly 3D, VFX, music and foley, sprint planning and documentation.</p>
           </article>
@@ -271,8 +272,8 @@
     <section class="section section-alt" id="about" aria-labelledby="about-title">
       <div class="container about-grid">
         <figure class="about-media" data-reveal>
-          <div class="media media-square" data-label="headShot.jpg">
-            <img src="images/headShot.jpg" alt="Portrait of Joshua Hanneson" width="800" height="800" loading="lazy">
+          <div class="media media-square" data-label="joshua-portrait.jpg">
+            <img src="images/joshua-portrait.jpg" alt="Portrait of Joshua Hanneson" width="800" height="800" loading="lazy">
           </div>
         </figure>
 
@@ -359,7 +360,6 @@
           <select id="cf-topic" name="topic">
             <option>Launch &amp; marketing plan</option>
             <option>Steam page review</option>
-            <option>Playtests &amp; feedback</option>
             <option>Production or craft support</option>
             <option>Something else</option>
           </select>

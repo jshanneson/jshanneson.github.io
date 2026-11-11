@@ -5,8 +5,9 @@
    Colour roles (keep the hierarchy by sticking to these):
      navy      backgrounds and cards
      lavender  structure and secondary emphasis (labels, borders, hovers, links)
-     gold      ONLY the hero accent phrase and "Work with me" style buttons
-     purple    a brand glow in the hero, contact and call-to-action bands
+     gold      the hero accent phrase, "Work with me" buttons, and small highlights
+               further down the page (stats, section labels, card titles). Not in the hero beyond that.
+     blue      the glow in the hero and the contact / call-to-action bands
    ========================================================================== */
 
 :root {
@@ -133,7 +134,7 @@ ul, ol { margin: 0; padding: 0; }
 .btn-primary { background: var(--gold); color: #2A1640; }               /* gold: "Work with me" only */
 .btn-primary:hover { background: #f8cd78; color: #2A1640; }
 .btn-accent { background: var(--lavender); color: var(--bg); }          /* main non-gold action */
-.btn-accent:hover { background: #c7b4f0; color: var(--bg); }
+.btn-accent:hover { background: #fff; color: var(--bg); }              /* clear step up from the lavender */
 .btn-outline { border-color: var(--lavender); color: #fff; background: transparent; }
 .btn-outline:hover { background: var(--lavender); color: var(--bg); }
 .btn-ghost { border-color: rgba(255, 255, 255, 0.45); color: #fff; }
@@ -152,14 +153,15 @@ ul, ol { margin: 0; padding: 0; }
   display: flex; align-items: center; gap: 10px; margin: 0 0 0.8rem;
   font-size: 0.76rem; font-weight: bold; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lavender);
 }
-.eyebrow::before { content: ""; width: 24px; height: 2px; border-radius: 2px; background: var(--lavender); }
+.eyebrow::before { content: ""; width: 24px; height: 2px; border-radius: 2px; background: currentColor; }
+#services .eyebrow, #contact .eyebrow, #about .eyebrow { color: var(--gold); }   /* gold section labels lower down the page */
 
 /* --------------------------------------------------------------------------
    Image slots with placeholders (script.js removes broken images)
    -------------------------------------------------------------------------- */
 .media {
   position: relative; overflow: hidden; border-radius: var(--radius); aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, #2A1A4E 0%, #3b3170 55%, #15233F 130%);
+  background: linear-gradient(135deg, #1A2D55 0%, #24427A 55%, #15233F 130%);
 }
 .media::before {
   content: attr(data-label); position: absolute; inset: 0; display: grid; place-items: center; padding: 12px;
@@ -174,11 +176,15 @@ ul, ol { margin: 0; padding: 0; }
 .hero {
   position: relative; overflow: hidden; color: #fff; padding: 44px 0 56px;
   background:
+    radial-gradient(900px 480px at 88% -10%, rgba(76, 128, 224, 0.30), transparent 60%),
+    radial-gradient(760px 460px at -8% 108%, rgba(26, 58, 130, 0.75), transparent 62%),
     #0F1A31;
 }
 .hero::before, .hero::after {
   content: ""; position: absolute; border-radius: 50%; pointer-events: none; filter: blur(8px);
 }
+.hero::before { width: 380px; height: 380px; top: -140px; right: 6%; background: radial-gradient(circle, rgba(76, 128, 224, 0.22), transparent 70%); animation: drift 16s ease-in-out infinite alternate; }
+.hero::after { width: 320px; height: 320px; bottom: -150px; left: 12%; background: radial-gradient(circle, rgba(30, 70, 150, 0.6), transparent 70%); animation: drift 20s ease-in-out infinite alternate-reverse; }
 .hero > .container { position: relative; z-index: 1; }
 
 .hero-grid { display: grid; gap: 28px; align-items: center; }
@@ -186,14 +192,70 @@ ul, ol { margin: 0; padding: 0; }
 .accent { color: var(--gold); }
 .lead { font-size: 1rem; color: rgba(255, 255, 255, 0.88); max-width: 34rem; }
 .hero-media { margin: 0; }
-.hero-media .media { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--line); }
+.hero-media .hero-slides { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--line); }
+
+/* Hero slideshow: cross-fade, translucent chevrons, dots (with a progress fill) underneath */
+.hero-carousel { position: relative; }
+.hero-slides {
+  position: relative; aspect-ratio: 16 / 10; border-radius: var(--radius); overflow: hidden;
+  background: var(--surface); touch-action: pan-y;
+}
+.hero-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+.hero-slide .media { height: 100%; aspect-ratio: auto; border-radius: 0; }
+.hero-slide.is-leaving { opacity: 1; visibility: visible; z-index: 1; }           /* stays put while the next fades in on top */
+.hero-slide.is-active { opacity: 1; visibility: visible; z-index: 2; transition: opacity 0.9s ease; }
+.js:not(.hc-ready) .hero-slide:not(:first-child) { display: none; }                /* before script.js builds the controls */
+
+.hc-arrow {
+  position: absolute; top: calc(50% - 22px); z-index: 3; width: 44px; height: 44px;
+  display: grid; place-items: center; padding: 0; cursor: pointer; color: #fff;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(10, 18, 34, 0.38); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0.75; transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s var(--ease);
+}
+.hc-prev { left: 10px; }
+.hc-next { right: 10px; }
+.hc-arrow:hover, .hc-arrow:focus-visible { opacity: 1; background: rgba(10, 18, 34, 0.7); }
+.hc-prev:hover svg { transform: translateX(-2px); }
+.hc-next:hover svg { transform: translateX(2px); }
+.hc-arrow svg { transition: transform 0.2s var(--ease); }
+@media (hover: hover) {
+  .hero-carousel .hc-arrow { opacity: 0; }
+  .hero-carousel:hover .hc-arrow, .hero-carousel:focus-within .hc-arrow { opacity: 0.85; }
+  .hero-carousel .hc-arrow:hover { opacity: 1; }
+}
+.hc-controls { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 8px; }
+.hc-dot { position: relative; width: 22px; height: 28px; padding: 0; border: 0; background: transparent; cursor: pointer; transition: width 0.35s var(--ease); }
+.hc-dot::before {                                     /* the visible dot */
+  content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 8px;
+  background: rgba(255, 255, 255, 0.32); transition: width 0.35s var(--ease), margin 0.35s var(--ease), background 0.2s ease;
+}
+.hc-dot:hover::before { background: rgba(255, 255, 255, 0.6); }
+.hc-dot.is-active { width: 40px; }
+.hc-dot.is-active::before { width: 28px; margin-left: -14px; background: rgba(255, 255, 255, 0.22); }
+.hc-fill {                                            /* fills across the dwell time, then moves to the next slide */
+  position: absolute; left: 50%; top: 50%; width: 28px; height: 8px; margin: -4px 0 0 -14px; border-radius: 8px;
+  background: var(--lavender); transform: scaleX(0); transform-origin: left; pointer-events: none;
+}
+.hc-dot.is-active .hc-fill { animation: hc-progress var(--hc-time, 5s) linear forwards; }
+.hero-carousel.is-paused .hc-fill { animation-play-state: paused; }
+.hero-carousel.is-manual .hc-dot.is-active .hc-fill { animation: none; transform: none; }   /* no autoplay: solid pill */
+.hc-dot:focus-visible, .hc-arrow:focus-visible, .hc-pause:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
+.hc-pause {
+  width: 28px; height: 28px; margin-left: 8px; padding: 0; display: grid; place-items: center; cursor: pointer;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25); background: transparent; color: rgba(255, 255, 255, 0.8);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.hc-pause:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.hc-pause[hidden] { display: none; }
+@keyframes hc-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* --------------------------------------------------------------------------
    Sections
    -------------------------------------------------------------------------- */
 .section { padding: 44px 0; }
 .section-alt { background: var(--bg-alt); }
-.section-contact { background: linear-gradient(135deg, #15233F 0%, #2A1A4E 100%); }
+.section-contact { background: linear-gradient(135deg, #15233F 0%, #1B3366 100%); }
 .section h2 { font-size: 1.5rem; }
 .section-head { margin-bottom: 8px; max-width: 40rem; }
 .section-intro { color: var(--muted); }
@@ -211,22 +273,27 @@ ul, ol { margin: 0; padding: 0; }
 .card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .card-link:hover { color: #fff; }
 
-/* Project + featured cards share one hover treatment: thick lavender ring, lift, image zoom */
+/* Project cards: thick lavender ring, lift, image zoom.
+   The featured card gets the ring only (it is big, so no lift or drop shadow). */
 .project, .feature {
   position: relative;
   transition: transform 0.35s var(--ease), box-shadow 0.35s ease, border-color 0.35s ease;
 }
-.project:focus-within, .feature:focus-within {
+.project:focus-within {
   transform: translateY(-5px); border-color: var(--lavender);
   box-shadow: 0 0 0 3px var(--lavender), 0 18px 36px rgba(0, 0, 0, 0.5);
 }
-.project:focus-within .media img, .feature:focus-within .media img { transform: scale(1.06); }
+.feature:focus-within { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender), var(--shadow); }
+.project:focus-within .media img { transform: scale(1.06); }
+.feature:focus-within .media img { transform: scale(1.03); }
 @media (hover: hover) {
-  .project:hover, .feature:hover {
+  .project:hover {
     transform: translateY(-5px); border-color: var(--lavender);
     box-shadow: 0 0 0 3px var(--lavender), 0 18px 36px rgba(0, 0, 0, 0.5);
   }
-  .project:hover .media img, .feature:hover .media img { transform: scale(1.06); }
+  .feature:hover { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender), var(--shadow); }
+  .project:hover .media img { transform: scale(1.06); }
+  .feature:hover .media img { transform: scale(1.03); }
 }
 
 /* Featured */
@@ -245,7 +312,7 @@ ul, ol { margin: 0; padding: 0; }
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 10px;
 }
 .feature-stats li { display: flex; flex-direction: column; }
-.stat-num { font-size: 1.5rem; font-weight: bold; color: #fff; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat-num { font-size: 1.5rem; font-weight: bold; color: var(--gold); line-height: 1.1; font-variant-numeric: tabular-nums; }
 .stat-label { font-size: 0.76rem; color: var(--muted); }
 
 /* Work groups + grids / carousels */
@@ -294,7 +361,10 @@ ul, ol { margin: 0; padding: 0; }
 
 /* Services */
 .services-grid { display: grid; gap: 14px; margin-top: 24px; }
-.services-grid .card { border-top: 3px solid var(--lavender); }
+.services-grid .card { transition: transform 0.4s var(--ease); }
+.services-grid .card h3 { color: var(--gold); }
+/* Not clickable, so only a gentle grow: no border, colour or cursor change */
+@media (hover: hover) { .services-grid .card.is-in:hover { transform: scale(1.025); } }
 
 /* About */
 .about-grid { display: grid; gap: 26px; align-items: start; }
@@ -353,8 +423,8 @@ ul, ol { margin: 0; padding: 0; }
 .proj-head {
   position: relative; overflow: hidden; padding: 28px 0 32px;
   background:
-    radial-gradient(800px 360px at 90% -20%, rgba(180, 156, 231, 0.32), transparent 60%),
-    radial-gradient(600px 320px at 0% 110%, rgba(65, 34, 94, 0.85), transparent 62%),
+    radial-gradient(800px 360px at 90% -20%, rgba(76, 128, 224, 0.28), transparent 60%),
+    radial-gradient(600px 320px at 0% 110%, rgba(26, 58, 130, 0.7), transparent 62%),
     #0F1A31;
 }
 .crumb { display: block; width: fit-content; margin-bottom: 18px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85); text-decoration: none; }
@@ -372,7 +442,7 @@ ul, ol { margin: 0; padding: 0; }
 .proj-section { padding: 28px 0; }
 .proj-section h2 { font-size: 1.4rem; }
 .bullets { padding-left: 1.1rem; display: grid; gap: 6px; color: var(--ink); }
-.bullets li::marker { color: var(--lavender); }
+.bullets li::marker { color: var(--gold); }
 .coming-soon { color: var(--muted); font-style: italic; }
 
 .steps { list-style: none; counter-reset: step; display: grid; gap: 26px; }
@@ -392,7 +462,7 @@ ul, ol { margin: 0; padding: 0; }
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
 }
 .stats li { display: flex; flex-direction: column; }
-.stats .stat-num { font-size: 1.7rem; color: var(--lavender); }
+.stats .stat-num { font-size: 1.7rem; color: var(--gold); }
 
 .gallery-title { margin-bottom: 14px; }
 .gallery { display: grid; gap: 14px; }
@@ -404,7 +474,7 @@ ul, ol { margin: 0; padding: 0; }
 .pager-link:hover { border-color: var(--lavender); transform: translateY(-3px); }
 .pager-next { text-align: right; }
 
-.cta-band { background: linear-gradient(135deg, #15233F 0%, #2A1A4E 100%); padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
+.cta-band { background: linear-gradient(135deg, #15233F 0%, #1B3366 100%); padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
 .cta-inner p { color: rgba(255, 255, 255, 0.88); }
 
 /* --------------------------------------------------------------------------
@@ -420,6 +490,10 @@ ul, ol { margin: 0; padding: 0; }
 @keyframes rise-x {
   from { opacity: 0; transform: translateX(56px) scale(0.985); }
   to   { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(34px); }
@@ -441,6 +515,7 @@ ul, ol { margin: 0; padding: 0; }
 .is-animating { animation: rise 0.95s var(--ease) var(--d, 0s) both; }
 [data-hero].is-animating { animation-name: hero-rise; animation-duration: 1s; }
 [data-hero="image"].is-animating { animation-name: hero-image; animation-duration: 1.5s; }
+[data-reveal="fade"].is-animating { animation-name: fade-in; animation-duration: 0.9s; }
 
 .w { display: inline-block; }
 .w-run .w { animation: word-in 0.9s var(--ease) var(--wd, 0s) both; }
@@ -452,6 +527,9 @@ ul, ol { margin: 0; padding: 0; }
 
   .js:not(.no-anim) [data-reveal]:not(.is-in),
   .js:not(.no-anim) [data-reveal-group] > :not(.is-in) { transform: translateY(44px) scale(0.985); }
+  .js:not(.no-anim) [data-reveal="fade"]:not(.is-in) { transform: none; }
+  /* Cards start offset to the right; a snapping scroller would chase them (jump left, then back) */
+  .js:not(.no-anim) .carousel-track[data-reveal-group]:not(.reveal-done) { scroll-snap-type: none; }   /* fade only, no fly-in */
   .js:not(.no-anim) [data-hero]:not(.is-in):not([data-hero="split"]) { transform: translateY(34px); }
   .js:not(.no-anim) [data-hero="image"]:not(.is-in) { transform: scale(1.06); }
 
@@ -479,7 +557,6 @@ ul, ol { margin: 0; padding: 0; }
   .hero h1 { font-size: 2.5rem; }
   .carousel-track > * { flex-basis: 44%; max-width: none; }
   .feature-stats { grid-template-columns: repeat(4, 1fr); }
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .gallery { grid-template-columns: repeat(3, 1fr); }
   .pager-inner { grid-template-columns: 1fr 1fr; }
@@ -517,7 +594,7 @@ ul, ol { margin: 0; padding: 0; }
   .carousel-track > * { max-width: none; }
   .carousel-controls { display: none; }
 
-  .services-grid { grid-template-columns: repeat(4, 1fr); }
+  .services-grid { grid-template-columns: repeat(3, 1fr); }
   .about-grid { grid-template-columns: 220px 1fr; gap: 48px; }
   .music-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
   .contact-grid { grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }

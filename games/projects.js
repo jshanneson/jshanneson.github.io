@@ -35,7 +35,7 @@ window.PROJECTS = [
       { label: "Instagram", url: "https://instagram.com/ghostie_town" },
       { label: "TikTok", url: "https://www.tiktok.com/@ghostie_town/" }
     ],
-    image: "images/ghostie-town-hero.jpg",
+    image: "images/ghostie-town-hero.png",
     imageAlt: "Ghostie Town key art: a small ghost holding a broom on a lantern-lit street",
 
     overview: [
@@ -58,7 +58,7 @@ window.PROJECTS = [
       {
         title: "Make it cheap to look good",
         text: "Low-poly models with no texturing are fast to build and fast to colour. A strict 60/30/10 palette of sage green, lavender purple and amber gold keeps the town consistent, with warm lit windows and lamps pulling the eye through the night-time scenes.",
-        image: "images/ghostie-town-lowpoly.jpg",
+        image: "images/ghostie-town-lowpoly.png",
         imageAlt: "Low-poly Blender models of a house, bench, bridge and ghost next to the finished in-engine scene",
         caption: "Simple untextured models in Blender, then the finished scene in Unity."
       },
@@ -69,7 +69,7 @@ window.PROJECTS = [
       {
         title: "Greybox and map the progression",
         text: "Before any final art I blocked out the town in grey boxes, coloured the key buildings and placed progress gates. In Miro I mapped how each tool unlocks different work and how Town Appeal levels open up the story, with several paths to success. Finishing the game requires every tool, which pulls the player through the whole town.",
-        image: "images/ghostie-town-greybox.jpg",
+        image: "images/ghostie-town-greybox.png",
         imageAlt: "Greybox view of the town with red progress gates and coloured key buildings",
         caption: "Greybox town with progress gates, before final art."
       },
@@ -80,7 +80,7 @@ window.PROJECTS = [
       {
         title: "Playtest and polish",
         text: "Virtual playtests showed that object selection felt wrong: with a simple trigger box the last object entered was selected, so players had to approach head-on. I replaced it with a list of nearby objects ranked by angle and distance. Small touches like dust particles and a trash-shake animation made repetitive chores satisfying.",
-        image: "images/ghostie-town-progression.jpg",
+        image: "images/ghostie-town-progression.png",
         imageAlt: "Miro board mapping tool progression and Town Appeal gates",
         caption: "Progression map with Town Appeal gates and multiple routes."
       },
@@ -95,9 +95,9 @@ window.PROJECTS = [
     ],
 
     gallery: [
-      { src: "images/ghostie-town-screen-1.jpg", alt: "Ghostie Town gameplay screenshot", caption: "" },
-      { src: "images/ghostie-town-screen-2.jpg", alt: "Ghostie Town gameplay screenshot", caption: "" },
-      { src: "images/ghostie-town-screen-3.jpg", alt: "Ghostie Town gameplay screenshot", caption: "" }
+      { src: "images/ghostie-town-screen-1.png", alt: "Ghostie Town gameplay screenshot", caption: "" },
+      { src: "images/ghostie-town-screen-2.png", alt: "Ghostie Town gameplay screenshot", caption: "" },
+      { src: "images/ghostie-town-screen-3.png", alt: "Ghostie Town gameplay screenshot", caption: "" }
     ],
 
     takeaways: [
@@ -124,7 +124,7 @@ window.PROJECTS = [
     links: [
       { label: "Play on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
     ],
-    image: "images/acorn-island.jpg",
+    image: "images/acorn-island.png",
     imageAlt: "A squirrel exploring a low-poly island with trees and water",
 
     overview: [
@@ -176,7 +176,7 @@ window.PROJECTS = [
     links: [
       { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
     ],
-    image: "images/a-crabby-adventure.jpg",
+    image: "images/a-crabby-adventure.png",
     imageAlt: "A Crabby Adventure screenshot",
     overview: [
       "This crab doesn't think it is better down where it's wetter, and wants to go catch some sunshine up on the beach!",
@@ -204,7 +204,7 @@ window.PROJECTS = [
     links: [
       { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
     ],
-    image: "images/invending-doom.jpg",
+    image: "images/invending-doom.png",
     imageAlt: "Invending Doom screenshot",
     overview: [
       "Play as a dinosaur collecting items as payment for a mysterious vending machine. Find the right item, and you will enjoy sodas with your friends! Bring back the wrong item... and face the wrath of the machine.",
@@ -213,30 +213,6 @@ window.PROJECTS = [
     highlights: [
       "Built game-ready 3D assets for Godot",
       "Designed the game's sound"
-    ]
-  },
-  {
-    slug: "massacreade",
-    title: "Massacreade",
-    tagline: "A hungry chameleon crashes a fancy bug ball.",
-    type: "Game jam",
-    role: "Level design and environmental models",
-    facts: [
-      ["Role", "Level design, environment art"],
-      ["Format", "Game jam"]
-    ],
-    links: [
-      { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
-    ],
-    image: "images/massacreade.jpg",
-    imageAlt: "Massacreade screenshot",
-    overview: [
-      "Play as a hungry Chameleon attending a fancy pants bug ball masquerade that they were not invited to. Mask up and blend in with the nobles to feast on the most delectable meal in the land: the other guests!",
-      "My part: I designed the levels and modelled the environment."
-    ],
-    highlights: [
-      "Level layout and flow",
-      "Environmental 3D models"
     ]
   },
   {
@@ -253,7 +229,7 @@ window.PROJECTS = [
     links: [
       { label: "Play in browser", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
     ],
-    image: "images/jam-jar-lid.jpg",
+    image: "images/jam-jar-lid.png",
     imageAlt: "Jam Jar Lid screenshot",
     overview: [
       "You are a jar of jam... but you lost your jam jar lid! Better go find it...",
@@ -277,7 +253,7 @@ window.PROJECTS = [
     links: [
       { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
     ],
-    image: "images/hive.jpg",
+    image: "images/hive.png",
     imageAlt: "HIVE screenshot of an ant invading a hive",
     overview: [
       "A thrilling and action-packed game where players take on the role of an ant warrior, navigating through intricate hive structures to invade and conquer rival ant colonies. Strategize and engage in fast-paced battles as you lead your colony to victory, overcoming obstacles and adversaries along the way. Will you rise as the ultimate ruler of the Hive or fall to the might of your enemies?",
@@ -286,29 +262,6 @@ window.PROJECTS = [
     highlights: [
       "Enemy movement built on nav mesh pathfinding",
       "Original music for the game"
-    ]
-  },
-  {
-    slug: "stubbys-adventure",
-    title: "Stubby’s Adventure",
-    tagline: "A shrunken alchemist searches the woods for magical stone shards.",
-    type: "Game jam",
-    role: "2D art",
-    facts: [
-      ["Role", "2D art"],
-      ["Format", "Game jam"]
-    ],
-    links: [
-      { label: "View on itch.io", url: "https://jshanneson.itch.io/", primary: true } /* TODO: direct game URL */
-    ],
-    image: "images/stubbys-adventure.jpg",
-    imageAlt: "Stubby's Adventure 2D art",
-    overview: [
-      "Stubby’s Adventure follows the tale of Steve Buddy, the alchemist. One day, while working on a magical size-changing crystal, Stubby shrinks himself to a small size! He must now explore the woods in search of magical stone shards to reverse his curse.",
-      "My part: I created the 2D art."
-    ],
-    highlights: [
-      "2D art for the characters and forest setting"
     ]
   }
 
@@ -324,16 +277,16 @@ window.PROJECTS = [
     role: "What you did, in one line",
     facts: [["Role", "..."], ["Tools", "..."], ["Timeline", "48 hours"], ["Team", "4 people"]],
     links: [{ label: "Play on itch.io", url: "https://...", primary: true }],
-    image: "images/my-new-game.jpg",
+    image: "images/my-new-game.png",
     imageAlt: "Describe the image",
     overview: ["Paragraph one.", "Paragraph two."],
     highlights: ["Short bullet", "Short bullet"],
     results: [{ value: "48h", label: "jam time limit" }],
     process: [
       { title: "Step title", text: "What you did and why.",
-        image: "images/step.jpg", imageAlt: "...", caption: "..." }
+        image: "images/step.png", imageAlt: "...", caption: "..." }
     ],
-    gallery: [{ src: "images/shot-1.jpg", alt: "...", caption: "..." }],
+    gallery: [{ src: "images/shot-1.png", alt: "...", caption: "..." }],
     takeaways: ["Lesson one", "Lesson two"]
   }
   ---------------------------------------------------------------------- */

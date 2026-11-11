@@ -25,6 +25,7 @@
     initBackToTop();
     initImages();
     initHero();
+    initHeroCarousel();
     initReveal();
     initCounts();
     initCarousels();
@@ -45,7 +46,7 @@
 
   /* Play the entrance animation on one element, then hand it back to normal styles
      (so hover effects such as the card lift work afterwards). */
-  function animateIn(el, delay) {
+  function animateIn(el, delay, done) {
     if (el.classList.contains('is-in') || el.classList.contains('is-animating')) return;
     delay = delay || 0;
     el.style.setProperty('--d', delay + 's');
@@ -58,6 +59,7 @@
       el.classList.remove('is-animating');
       el.classList.add('is-in');
       el.style.removeProperty('--d');
+      if (done) done();
     }
     el.addEventListener('animationend', function (e) { if (e.target === el) finish(); });
     window.setTimeout(finish, delay * 1000 + 2400); // safety net if animationend never fires
@@ -66,6 +68,7 @@
   function markAllIn() {
     all('[data-hero], [data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
     all('[data-reveal-group] > *').forEach(function (el) { el.classList.add('is-in'); });
+    all('.carousel-track').forEach(function (t) { t.classList.add('reveal-done'); });
   }
 
   /* ---------------------------------------------------------------------- nav */
@@ -174,6 +177,152 @@
     });
   }
 
+  /* ------------------------------------------------------------ hero slideshow */
+
+  /* Cross-fading slideshow in the hero: dots with a progress fill, translucent arrows,
+     swipe and arrow keys. Autoplays (5s per slide) but pauses on hover, keyboard focus,
+     when scrolled out of view, when the tab is hidden, or when the visitor hits pause.
+     Visitors who prefer reduced motion get no autoplay. */
+  function initHeroCarousel() {
+    var box = document.querySelector('[data-hero-carousel]');
+    if (!box) return;
+    var slides = all('.hero-slide', box);
+    var stage = box.querySelector('.hero-slides');
+    var prevBtn = box.querySelector('.hc-prev');
+    var nextBtn = box.querySelector('.hc-next');
+    var DWELL = 5; // seconds per slide
+
+    if (slides.length < 2) {
+      if (prevBtn) prevBtn.hidden = true;
+      if (nextBtn) nextBtn.hidden = true;
+      return;
+    }
+
+    var current = 0;
+    var userPaused = false, hovering = false, focused = false, offscreen = false, tabHidden = false;
+    var autoplay = !reduceMotion;
+    var leaveTimer = null;
+
+    // Controls under the image: dots + pause button
+    var controls = document.createElement('div');
+    controls.className = 'hc-controls';
+    var dots = slides.map(function (s, i) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'hc-dot';
+      d.setAttribute('aria-label', 'Show image ' + (i + 1) + ' of ' + slides.length);
+      d.innerHTML = '<span class="hc-fill"></span>';
+      d.addEventListener('click', function () { goTo(i, true); });
+      controls.appendChild(d);
+      return d;
+    });
+    var pauseBtn = document.createElement('button');
+    pauseBtn.type = 'button';
+    pauseBtn.className = 'hc-pause';
+    pauseBtn.hidden = !autoplay;
+    controls.appendChild(pauseBtn);
+    box.appendChild(controls);
+
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>';
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
+
+    function syncState() {
+      var paused = !autoplay || userPaused || hovering || focused || offscreen || tabHidden;
+      box.classList.toggle('is-paused', paused);
+      box.classList.toggle('is-manual', !autoplay || userPaused);
+      stage.setAttribute('aria-live', (!autoplay || userPaused || paused) ? 'polite' : 'off');
+      // Only touch the button when its state changes: swapping the icon mid-click would cancel the click
+      if (pauseBtn.getAttribute('data-state') !== (userPaused ? 'play' : 'pause')) {
+        pauseBtn.setAttribute('data-state', userPaused ? 'play' : 'pause');
+        pauseBtn.innerHTML = userPaused ? ICON_PLAY : ICON_PAUSE;
+        pauseBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+      }
+    }
+
+    function goTo(i, manual) {
+      i = (i + slides.length) % slides.length;
+      if (i === current && slides[current].classList.contains('is-active')) {
+        restartProgress();
+        return;
+      }
+      var old = slides[current];
+      slides.forEach(function (s) { s.classList.remove('is-leaving'); });
+      old.classList.remove('is-active');
+      old.classList.add('is-leaving');
+      window.clearTimeout(leaveTimer);
+      leaveTimer = window.setTimeout(function () { old.classList.remove('is-leaving'); }, 950);
+
+      current = i;
+      slides[current].classList.add('is-active');
+      dots.forEach(function (d, n) {
+        d.classList.toggle('is-active', n === current);
+        if (n === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+      restartProgress();
+    }
+
+    // The dot's fill animation doubles as the autoplay timer: when it ends, go to the next slide.
+    function restartProgress() {
+      var fill = dots[current].querySelector('.hc-fill');
+      fill.style.animation = 'none';
+      void fill.offsetWidth; // reflow so the animation restarts
+      fill.style.animation = '';
+    }
+    dots.forEach(function (d, i) {
+      d.querySelector('.hc-fill').addEventListener('animationend', function () {
+        if (autoplay && !userPaused && i === current) goTo(current + 1);
+      });
+    });
+
+    prevBtn.addEventListener('click', function () { goTo(current - 1, true); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1, true); });
+    pauseBtn.addEventListener('click', function () { userPaused = !userPaused; syncState(); });
+
+    // Keyboard: left / right arrows while focus is inside the slideshow
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { goTo(current - 1, true); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { goTo(current + 1, true); e.preventDefault(); }
+    });
+
+    // Pause while a mouse is over it or keyboard focus is inside (touch taps do not count as hover)
+    box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hovering = true; syncState(); } });
+    box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; syncState(); } });
+    box.addEventListener('focusin', function (e) {
+      try { focused = e.target.matches(':focus-visible'); } catch (err) { focused = true; }
+      syncState();
+    });
+    box.addEventListener('focusout', function () { focused = false; syncState(); });
+
+    // Swipe on touch screens
+    var startX = null, startY = null;
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse') return;
+      startX = e.clientX; startY = e.clientY;
+    });
+    stage.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX, dy = e.clientY - startY;
+      startX = startY = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goTo(current + (dx < 0 ? 1 : -1), true);
+    });
+    stage.addEventListener('pointercancel', function () { startX = startY = null; });
+
+    // Only run while visible and while the tab is showing
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        offscreen = !entries[0].isIntersecting;
+        syncState();
+      }, { threshold: 0.25 }).observe(box);
+    }
+    document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; syncState(); });
+
+    root.classList.add('hc-ready');
+    box.style.setProperty('--hc-time', DWELL + 's');
+    dots[0].classList.add('is-active');
+    dots[0].setAttribute('aria-current', 'true');
+    syncState();
+  }
+
   /* ----------------------------------------------------------- scroll reveals */
 
   function initReveal() {
@@ -186,8 +335,14 @@
         observer.unobserve(el); // first view only
 
         if (el.hasAttribute('data-reveal-group')) {
-          Array.prototype.slice.call(el.children).forEach(function (child, i) {
-            animateIn(child, Math.min(i * 0.1, 0.7));
+          var kids = Array.prototype.slice.call(el.children);
+          var left = kids.length;
+          kids.forEach(function (child, i) {
+            animateIn(child, Math.min(i * 0.1, 0.7), function () {
+              // Carousel tracks keep scroll-snap switched off until every card has landed
+              // (a snapping scroller chases the moving cards and causes a visible jerk).
+              if (--left === 0) el.classList.add('reveal-done');
+            });
           });
         } else {
           animateIn(el, 0);
@@ -324,7 +479,11 @@
     if (!links.length) return;
 
     var map = {};
-    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    links.forEach(function (a) {
+      map[a.getAttribute('href').slice(1)] = a;
+      var also = a.getAttribute('data-also');   // e.g. "Work" link targets #featured but stays lit across #work
+      if (also) map[also] = a;
+    });
     var sections = Object.keys(map)
       .map(function (id) { return document.getElementById(id); })
       .filter(Boolean);
@@ -346,32 +505,17 @@
 
   /* -------------------------------------------------------------------- music */
 
-  /* Track picker: swaps the embedded player between Spotify and SoundCloud tracks */
+  /* Track picker: swaps the embedded Spotify player between tracks */
   function initTracks() {
     var frame = document.getElementById('music-frame');
     var buttons = all('.track-btn');
-    var note = document.getElementById('track-note');
     if (!frame || !buttons.length) return;
-
-    function embed(provider, id) {
-      if (provider === 'spotify') {
-        return { src: 'https://open.spotify.com/embed/track/' + encodeURIComponent(id) + '?utm_source=generator&theme=0', height: 152 };
-      }
-      return {
-        src: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + encodeURIComponent(id) +
-          '&color=%23B49CE7&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false',
-        height: 166
-      };
-    }
 
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var provider = btn.getAttribute('data-provider');
-        var e = embed(provider, btn.getAttribute('data-id'));
-        frame.src = e.src;
-        frame.setAttribute('height', String(e.height));
-        frame.title = btn.textContent + ' on ' + (provider === 'spotify' ? 'Spotify' : 'SoundCloud');
-        if (note) note.textContent = btn.getAttribute('data-note') || '';
+        frame.src = 'https://open.spotify.com/embed/track/' + encodeURIComponent(btn.getAttribute('data-id')) +
+          '?utm_source=generator&theme=0';
+        frame.title = btn.textContent + ' on Spotify';
         buttons.forEach(function (b) {
           var on = b === btn;
           b.classList.toggle('is-active', on);

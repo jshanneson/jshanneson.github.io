@@ -87,7 +87,7 @@
 
     var links = (p.links || []).map(function (l) {
       return h('a', {
-        'class': 'btn ' + (l.primary ? 'btn-accent' : 'btn-outline'),
+        'class': 'btn btn-accent',
         href: l.url, target: '_blank', rel: 'noopener', text: l.label
       });
     });
@@ -114,7 +114,7 @@
     /* Overview + highlights */
     var overviewKids = paragraphs(p.overview);
     if (p.highlights && p.highlights.length) {
-      overviewKids.push(h('ul', { 'class': 'bullets', 'data-reveal-group': '' },
+      overviewKids.push(h('ul', { 'class': 'bullets', 'data-reveal': '' },
         p.highlights.map(function (t) { return h('li', { text: t }); })));
     }
     if (overviewKids.length) frag.appendChild(section('Overview', overviewKids));
@@ -160,7 +160,7 @@
     /* Takeaways */
     if (p.takeaways && p.takeaways.length) {
       frag.appendChild(section('Takeaways', [
-        h('ul', { 'class': 'bullets', 'data-reveal-group': '' }, p.takeaways.map(function (t) { return h('li', { text: t }); }))
+        h('ul', { 'class': 'bullets', 'data-reveal': '' }, p.takeaways.map(function (t) { return h('li', { text: t }); }))
       ]));
     }
 
@@ -168,7 +168,7 @@
     var prev = projects[(index - 1 + projects.length) % projects.length];
     var next = projects[(index + 1) % projects.length];
     frag.appendChild(h('nav', { 'class': 'pager', 'aria-label': 'More projects' }, [
-      h('div', { 'class': 'container pager-inner', 'data-reveal-group': '' }, [
+      h('div', { 'class': 'container pager-inner', 'data-reveal': 'fade' }, [
         h('a', { href: 'project.html?p=' + encodeURIComponent(prev.slug), 'class': 'pager-link' }, [
           h('span', { text: '← Previous' }), h('strong', { text: prev.title })
         ]),
@@ -182,7 +182,7 @@
     frag.appendChild(h('section', { 'class': 'cta-band' }, [
       h('div', { 'class': 'container cta-inner', 'data-reveal-group': '' }, [
         h('h2', { text: 'Need help launching your game?' }),
-        h('p', { text: 'I can help with the plan, the store page, the playtests or the production work.' }),
+        h('p', { text: 'I can help with the plan, the store page or the production work.' }),
         h('div', {}, [h('a', { 'class': 'btn btn-primary', href: 'index.html#contact', text: 'Work with me' })])
       ])
     ]));
