@@ -154,7 +154,7 @@ ul, ol { margin: 0; padding: 0; }
   font-size: 0.76rem; font-weight: bold; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lavender);
 }
 .eyebrow::before { content: ""; width: 24px; height: 2px; border-radius: 2px; background: currentColor; }
-#services .eyebrow, #contact .eyebrow, #about .eyebrow { color: var(--gold); }   /* gold section labels lower down the page */
+#skills .eyebrow, #music .eyebrow, #contact .eyebrow, #about .eyebrow { color: var(--gold); }   /* gold section labels lower down the page */
 
 /* --------------------------------------------------------------------------
    Image slots with placeholders (script.js removes broken images)
@@ -241,12 +241,17 @@ ul, ol { margin: 0; padding: 0; }
 .hero-carousel.is-paused .hc-fill { animation-play-state: paused; }
 .hero-carousel.is-manual .hc-dot.is-active .hc-fill { animation: none; transform: none; }   /* no autoplay: solid pill */
 .hc-dot:focus-visible, .hc-arrow:focus-visible, .hc-pause:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
-.hc-pause {
-  width: 28px; height: 28px; margin-left: 8px; padding: 0; display: grid; place-items: center; cursor: pointer;
-  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25); background: transparent; color: rgba(255, 255, 255, 0.8);
-  transition: background 0.2s ease, color 0.2s ease;
+.hc-pause {                                           /* centred over the image, like a video player */
+  position: absolute; left: 50%; top: 50%; z-index: 4; width: 64px; height: 64px; margin: -32px 0 0 -32px; padding: 0;
+  display: grid; place-items: center; cursor: pointer; color: #fff;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(10, 18, 34, 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transform: scale(0.9);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease), background 0.2s ease;
 }
-.hc-pause:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.hero-slides.show-controls .hc-pause, .hc-pause:focus-visible { opacity: 1; pointer-events: auto; transform: none; }
+@media (hover: hover) { .hero-slides:hover .hc-pause { opacity: 1; pointer-events: auto; transform: none; } }
+.hc-pause:hover { background: rgba(10, 18, 34, 0.8); }
 .hc-pause[hidden] { display: none; }
 @keyframes hc-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
@@ -283,7 +288,7 @@ ul, ol { margin: 0; padding: 0; }
   transform: translateY(-5px); border-color: var(--lavender);
   box-shadow: 0 0 0 3px var(--lavender), 0 18px 36px rgba(0, 0, 0, 0.5);
 }
-.feature:focus-within { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender), var(--shadow); }
+.feature:focus-within { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender); }
 .project:focus-within .media img { transform: scale(1.06); }
 .feature:focus-within .media img { transform: scale(1.03); }
 @media (hover: hover) {
@@ -291,7 +296,7 @@ ul, ol { margin: 0; padding: 0; }
     transform: translateY(-5px); border-color: var(--lavender);
     box-shadow: 0 0 0 3px var(--lavender), 0 18px 36px rgba(0, 0, 0, 0.5);
   }
-  .feature:hover { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender), var(--shadow); }
+  .feature:hover { border-color: var(--lavender); box-shadow: 0 0 0 3px var(--lavender); }
   .project:hover .media img { transform: scale(1.06); }
   .feature:hover .media img { transform: scale(1.03); }
 }
@@ -299,7 +304,7 @@ ul, ol { margin: 0; padding: 0; }
 /* Featured */
 .feature {
   display: grid; background: var(--surface); border-radius: var(--radius);
-  overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow);
+  overflow: hidden; border: 1px solid var(--line); box-shadow: 0 0 0 0 var(--lavender);   /* no drop shadow, only the ring on hover */
 }
 .feature .media { border-radius: 0; }
 .feature-body { padding: 22px var(--gutter) 26px; }
@@ -364,12 +369,15 @@ ul, ol { margin: 0; padding: 0; }
 }
 .carousel-dot.is-active { width: 26px; border-radius: 6px; background: var(--lavender); }
 
-/* Services */
-.services-grid { display: grid; gap: 14px; margin-top: 24px; }
-.services-grid .card { transition: transform 0.4s var(--ease); }
-.services-grid .card h3 { color: var(--gold); }
+/* Skills */
+.skills-grid { display: grid; gap: 14px; margin-top: 24px; }
+.skills-grid .card { transition: transform 0.4s var(--ease); }
+.skills-grid .card h3 { color: var(--gold); }
 /* Not clickable, so only a gentle grow: no border, colour or cursor change */
-@media (hover: hover) { .services-grid .card.is-in:hover { transform: scale(1.025); } }
+.skills-note { margin: 26px 0 0; font-size: 0.95rem; color: var(--muted); }
+.skills-note a { color: var(--gold); font-weight: bold; text-decoration: none; border-bottom: 1px solid rgba(244, 193, 93, 0.45); }
+.skills-note a:hover { color: #fff; border-bottom-color: #fff; }
+@media (hover: hover) { .skills-grid .card.is-in:hover { transform: scale(1.025); } }
 
 /* About */
 .about-grid { display: grid; gap: 26px; align-items: start; }
@@ -390,32 +398,14 @@ ul, ol { margin: 0; padding: 0; }
 .track-note { margin: 8px 2px 0; min-height: 1.4em; font-size: 0.8rem; color: var(--muted); }
 
 /* Contact */
-.contact-grid { display: grid; gap: 26px; }
-.contact-copy p { color: rgba(255, 255, 255, 0.88); }
-.contact-links { list-style: none; display: grid; gap: 6px; margin-top: 1rem; }
-.contact-links a { color: #fff; }
-.contact-links a:hover { color: var(--lavender); }
+.contact-simple { max-width: 640px; }
+.contact-simple .btn-row { margin-top: 1.4rem; }
+.contact-copy-row { margin: 14px 0 0; }
 .copy-btn {
-  margin-left: 10px; min-height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  min-height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer;
   font-family: inherit; font-size: 0.74rem; color: #fff; background: transparent; border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .copy-btn:hover { background: rgba(255, 255, 255, 0.12); }
-
-.contact-form {
-  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px; display: grid; gap: 6px;
-}
-.contact-form label { font-size: 0.82rem; font-weight: bold; color: #fff; margin-top: 8px; }
-.contact-form input, .contact-form select, .contact-form textarea {
-  width: 100%; font-family: inherit; font-size: 0.92rem; color: var(--ink);
-  padding: 12px 14px; border: 1px solid rgba(180, 156, 231, 0.4); border-radius: var(--radius-sm);
-  background: var(--surface); transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--lavender); box-shadow: 0 0 0 3px rgba(180, 156, 231, 0.3); outline: none; }
-.contact-form textarea { resize: vertical; }
-.contact-form .is-invalid { border-color: #ff8a80; }
-.contact-form .btn { margin-top: 14px; width: 100%; }
-.form-note { margin: 8px 0 0; font-size: 0.8rem; color: var(--muted); min-height: 1.2em; }
 
 /* Footer */
 .site-footer { background: #060C18; color: var(--muted); font-size: 0.82rem; padding: 20px 0; border-top: 1px solid var(--line); }
@@ -565,7 +555,6 @@ ul, ol { margin: 0; padding: 0; }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .gallery { grid-template-columns: repeat(3, 1fr); }
   .pager-inner { grid-template-columns: 1fr 1fr; }
-  .contact-form .btn { width: auto; justify-self: start; }
   .facts { grid-template-columns: repeat(4, auto); justify-content: start; gap: 14px 36px; }
   .proj-head h1 { font-size: 2.5rem; }
 }
@@ -607,9 +596,8 @@ ul, ol { margin: 0; padding: 0; }
   .project-wide .blurb { -webkit-line-clamp: 5; font-size: 0.88rem; }
   .project-wide .project-actions { grid-row: 3; margin-top: 0; padding: 0 22px 22px; }
 
-  .services-grid { grid-template-columns: repeat(3, 1fr); }
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
   .about-grid { grid-template-columns: 220px 1fr; gap: 48px; }
   .music-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .contact-grid { grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
   .proj-hero-media { padding-top: 32px; }
 }

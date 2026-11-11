@@ -160,6 +160,32 @@ window.PROJECTS = [
        and a gallery of screenshots (see the TEMPLATE object at the bottom). */
   },
 
+  {
+    slug: "invending-doom",
+    title: "Invending Doom",
+    tagline: "Pay a mysterious vending machine with the right item, or face its wrath.",
+    type: "Game jam",
+    role: "3D modeling and sound design, producing game-ready assets in Godot",
+    facts: [
+      ["Role", "3D modeling, sound design"],
+      ["Tools", "Godot, Blender"],
+      ["Format", "Game jam"]
+    ],
+    links: [
+      { label: "Play on itch.io", url: "https://jshanneson.itch.io/invending-doom", primary: true }
+    ],
+    image: "images/invending-doom.png",
+    imageAlt: "Invending Doom screenshot",
+    overview: [
+      "Play as a dinosaur collecting items as payment for a mysterious vending machine. Find the right item, and you will enjoy sodas with your friends! Bring back the wrong item... and face the wrath of the machine.",
+      "My part: I made the 3D models and the sound design, and prepared the assets so they dropped straight into Godot ready to use."
+    ],
+    highlights: [
+      "Built game-ready 3D assets for Godot",
+      "Designed the game's sound"
+    ]
+  },
+
   /* ----------------------------------------------------------------------
      GAME JAMS
      ---------------------------------------------------------------------- */
@@ -190,32 +216,32 @@ window.PROJECTS = [
       "Produced 2D and 3D art under jam time pressure"
     ]
   },
+
   {
-    slug: "invending-doom",
-    title: "Invending Doom",
-    tagline: "Pay a mysterious vending machine with the right item, or face its wrath.",
+    slug: "hive",
+    title: "HIVE",
+    tagline: "Lead your colony as an ant warrior and conquer rival hives.",
     type: "Game jam",
-    role: "3D modeling and sound design, producing game-ready assets in Godot",
+    role: "Enemy movement programming (nav mesh) and music",
     facts: [
-      ["Role", "3D modeling, sound design"],
-      ["Tools", "Godot, Blender"],
-      ["Format", "Game jam"]
+      ["Role", "Programming, music"],
+      ["Format", "Game jam, team project"]
     ],
     links: [
-      /* TODO: add the Invending Doom itch.io page, e.g.
-         { label: "Play on itch.io", url: "https://...", primary: true } */
+      { label: "Play on itch.io", url: "https://achyuthsr.itch.io/hive", primary: true }
     ],
-    image: "images/invending-doom.png",
-    imageAlt: "Invending Doom screenshot",
+    image: "images/hive.png",
+    imageAlt: "HIVE screenshot of an ant invading a hive",
     overview: [
-      "Play as a dinosaur collecting items as payment for a mysterious vending machine. Find the right item, and you will enjoy sodas with your friends! Bring back the wrong item... and face the wrath of the machine.",
-      "My part: I made the 3D models and the sound design, and prepared the assets so they dropped straight into Godot ready to use."
+      "A thrilling and action-packed game where players take on the role of an ant warrior, navigating through intricate hive structures to invade and conquer rival ant colonies. Strategize and engage in fast-paced battles as you lead your colony to victory, overcoming obstacles and adversaries along the way. Will you rise as the ultimate ruler of the Hive or fall to the might of your enemies?",
+      "My part: I programmed how the enemies move around the world using a nav mesh, and composed the music."
     ],
     highlights: [
-      "Built game-ready 3D assets for Godot",
-      "Designed the game's sound"
+      "Enemy movement built on nav mesh pathfinding",
+      "Original music for the game"
     ]
   },
+
   {
     slug: "jam-jar-lid",
     title: "Jam Jar Lid",
@@ -240,31 +266,8 @@ window.PROJECTS = [
       "Playable in the browser with no install",
       "Art, code and level design by one person on a jam schedule"
     ]
-  },
-  {
-    slug: "hive",
-    title: "HIVE",
-    tagline: "Lead your colony as an ant warrior and conquer rival hives.",
-    type: "Game jam",
-    role: "Enemy movement programming (nav mesh) and music",
-    facts: [
-      ["Role", "Programming, music"],
-      ["Format", "Game jam, team project"]
-    ],
-    links: [
-      { label: "Play on itch.io", url: "https://achyuthsr.itch.io/hive", primary: true }
-    ],
-    image: "images/hive.png",
-    imageAlt: "HIVE screenshot of an ant invading a hive",
-    overview: [
-      "A thrilling and action-packed game where players take on the role of an ant warrior, navigating through intricate hive structures to invade and conquer rival ant colonies. Strategize and engage in fast-paced battles as you lead your colony to victory, overcoming obstacles and adversaries along the way. Will you rise as the ultimate ruler of the Hive or fall to the might of your enemies?",
-      "My part: I programmed how the enemies move around the world using a nav mesh, and composed the music."
-    ],
-    highlights: [
-      "Enemy movement built on nav mesh pathfinding",
-      "Original music for the game"
-    ]
   }
+
 
   /* ----------------------------------------------------------------------
      TEMPLATE: copy this into the list above for a new project.

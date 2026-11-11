@@ -32,7 +32,6 @@
     initActiveLinks();
     initTracks();
     initCopyEmail();
-    initContactForm();
 
     var year = document.getElementById('year');
     if (year) year.textContent = String(new Date().getFullYear());
@@ -220,11 +219,11 @@
     pauseBtn.type = 'button';
     pauseBtn.className = 'hc-pause';
     pauseBtn.hidden = !autoplay;
-    controls.appendChild(pauseBtn);
+    stage.appendChild(pauseBtn);
     box.appendChild(controls);
 
-    var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>';
-    var ICON_PLAY = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>';
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
 
     function syncState() {
       var paused = !autoplay || userPaused || hovering || focused || offscreen || tabHidden;
@@ -299,11 +298,19 @@
       if (e.pointerType === 'mouse') return;
       startX = e.clientX; startY = e.clientY;
     });
+    var tapTimer = null;
     stage.addEventListener('pointerup', function (e) {
       if (startX === null) return;
       var dx = e.clientX - startX, dy = e.clientY - startY;
       startX = startY = null;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goTo(current + (dx < 0 ? 1 : -1), true);
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        goTo(current + (dx < 0 ? 1 : -1), true);
+      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && !e.target.closest('.hc-pause, .hc-arrow')) {
+        // Touch screens have no hover: a tap shows the pause button for a moment
+        stage.classList.add('show-controls');
+        window.clearTimeout(tapTimer);
+        tapTimer = window.setTimeout(function () { stage.classList.remove('show-controls'); }, 2800);
+      }
     });
     stage.addEventListener('pointercancel', function () { startX = startY = null; });
 
@@ -543,45 +550,6 @@
           done(false);
         }
       });
-    });
-  }
-
-  /* The form builds a mailto: link, so submitting opens the visitor's email app with
-     a draft already written. Nothing is sent from the site itself. To actually send
-     messages later, swap this for a form service (Formspree, Web3Forms, Netlify Forms). */
-  function initContactForm() {
-    var form = document.getElementById('contact-form');
-    var note = document.getElementById('cf-note');
-    if (!form) return;
-
-    var TO = 'jshanneson@gmail.com'; // change if you want a different inbox
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var name = form.elements.name;
-      var topic = form.elements.topic;
-      var message = form.elements.message;
-      var ok = true;
-
-      [name, message].forEach(function (field) {
-        var empty = !field.value.trim();
-        field.classList.toggle('is-invalid', empty);
-        field.setAttribute('aria-invalid', String(empty));
-        if (empty) ok = false;
-      });
-
-      if (!ok) {
-        if (note) note.textContent = 'Please add your name and a short message.';
-        return;
-      }
-
-      var subject = 'Project inquiry: ' + topic.value;
-      var body = message.value.trim() + '\n\n' + name.value.trim();
-      if (note) note.textContent = 'Opening your email app. If nothing happens, write to ' + TO + '.';
-      window.location.href = 'mailto:' + TO +
-        '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
     });
   }
 })();

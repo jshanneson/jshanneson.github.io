@@ -181,8 +181,8 @@
     /* Call to action */
     frag.appendChild(h('section', { 'class': 'cta-band' }, [
       h('div', { 'class': 'container cta-inner', 'data-reveal-group': '' }, [
-        h('h2', { text: 'Need help launching your game?' }),
-        h('p', { text: 'I can help with the plan, the store page or the production work.' }),
+        h('h2', { text: 'Looking for a game designer for your team?' }),
+        h('p', { text: 'I bring design, production and launch experience from shipping my own game.' }),
         h('div', {}, [h('a', { 'class': 'btn btn-primary', href: 'index.html#contact', text: 'Work with me' })])
       ])
     ]));
