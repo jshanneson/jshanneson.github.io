@@ -131,8 +131,8 @@ ul, ol { margin: 0; padding: 0; }
 }
 .btn[hidden] { display: none; }
 .btn:hover { transform: translateY(-2px); }
-.btn-primary { background: var(--gold); color: #2A1640; }               /* gold: "Work with me" only */
-.btn-primary:hover { background: #f8cd78; color: #2A1640; }
+.btn-primary { background: var(--gold); color: #2A1640; }               /* gold call-to-action buttons */
+.btn-primary:hover { background: #fff; color: #2A1640; }
 .btn-accent { background: var(--lavender); color: var(--bg); }          /* main non-gold action */
 .btn-accent:hover { background: #fff; color: var(--bg); }              /* clear step up from the lavender */
 .btn-outline { border-color: var(--lavender); color: #fff; background: transparent; }
@@ -400,12 +400,6 @@ ul, ol { margin: 0; padding: 0; }
 /* Contact */
 .contact-simple { max-width: 640px; }
 .contact-simple .btn-row { margin-top: 1.4rem; }
-.contact-copy-row { margin: 14px 0 0; }
-.copy-btn {
-  min-height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer;
-  font-family: inherit; font-size: 0.74rem; color: #fff; background: transparent; border: 1px solid rgba(255, 255, 255, 0.5);
-}
-.copy-btn:hover { background: rgba(255, 255, 255, 0.12); }
 
 /* Footer */
 .site-footer { background: #060C18; color: var(--muted); font-size: 0.82rem; padding: 20px 0; border-top: 1px solid var(--line); }
@@ -463,9 +457,9 @@ ul, ol { margin: 0; padding: 0; }
 .gallery { display: grid; gap: 14px; }
 
 .pager { border-top: 1px solid var(--line); margin-top: 20px; }
-.pager-inner { display: grid; gap: 12px; padding-top: 22px; padding-bottom: 22px; }
+.pager-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 22px; padding-bottom: 22px; }   /* Previous left, Next right, even on phones */
 .pager-link { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); text-decoration: none; color: var(--muted); background: var(--surface); transition: border-color 0.2s ease, transform 0.3s var(--ease); }
-.pager-link strong { color: #fff; }
+.pager-link strong { color: #fff; overflow-wrap: anywhere; }   /* long titles wrap inside the button */
 .pager-link:hover { border-color: var(--lavender); transform: translateY(-3px); }
 .pager-next { text-align: right; }
 
@@ -554,7 +548,6 @@ ul, ol { margin: 0; padding: 0; }
   .feature-stats { grid-template-columns: repeat(4, 1fr); }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .gallery { grid-template-columns: repeat(3, 1fr); }
-  .pager-inner { grid-template-columns: 1fr 1fr; }
   .facts { grid-template-columns: repeat(4, auto); justify-content: start; gap: 14px 36px; }
   .proj-head h1 { font-size: 2.5rem; }
 }
@@ -597,7 +590,20 @@ ul, ol { margin: 0; padding: 0; }
   .project-wide .project-actions { grid-row: 3; margin-top: 0; padding: 0 22px 22px; }
 
   .skills-grid { grid-template-columns: repeat(3, 1fr); }
-  .about-grid { grid-template-columns: 220px 1fr; gap: 48px; }
+  .about-grid { grid-template-columns: 1fr 220px; gap: 48px; }
+  .about-media { order: 2; }
   .music-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
   .proj-hero-media { padding-top: 32px; }
+}
+
+/* Stacked (phone and tablet) layouts: only the labels, headings and portrait are centred.
+   Everything else (intro lines, paragraphs, buttons, cards) stays left-aligned. */
+@media (max-width: 899px) {
+  .eyebrow { justify-content: center; }
+  .eyebrow::after { content: ""; width: 24px; height: 2px; border-radius: 2px; background: currentColor; }
+  .hero .eyebrow::before, .hero .eyebrow::after { display: none; }   /* the long hero label wraps, so no side lines */
+  .hero h1, .section-head h2, .feature-body h2, .about-copy h2, .music-copy h2, .contact-simple h2 { text-align: center; }
+  .section-head { max-width: none; }
+  .section-intro { max-width: 40rem; }
+  .about-media { width: 220px; margin: 0 auto; }   /* explicit width: auto side margins would shrink the figure to nothing */
 }

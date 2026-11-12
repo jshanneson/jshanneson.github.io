@@ -31,7 +31,6 @@
     initCarousels();
     initActiveLinks();
     initTracks();
-    initCopyEmail();
 
     var year = document.getElementById('year');
     if (year) year.textContent = String(new Date().getFullYear());
@@ -533,23 +532,4 @@
   }
 
   /* ------------------------------------------------------------------ contact */
-
-  /* "Copy" button next to the email address */
-  function initCopyEmail() {
-    all('[data-copy]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var text = btn.getAttribute('data-copy');
-        var original = btn.textContent;
-        function done(ok) {
-          btn.textContent = ok ? 'Copied' : 'Press Ctrl/Cmd+C';
-          window.setTimeout(function () { btn.textContent = original; }, 1800);
-        }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
-        } else {
-          done(false);
-        }
-      });
-    });
-  }
 })();

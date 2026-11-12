@@ -61,9 +61,9 @@
         <ul>
           <li><a href="#featured">Featured</a></li>
           <li><a href="#work">Work</a></li>
-          <li><a href="#skills">Skills</a></li>
           <li><a href="#about">About</a></li>
-          <li><a class="nav-cta" href="#contact">Work with me</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a class="nav-cta" href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -249,8 +249,42 @@
       </div>
     </section>
 
+    <!-- ABOUT -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <figure class="about-media" data-reveal>
+          <div class="media media-square" data-label="joshua-portrait.jpg">
+            <img src="images/joshua-portrait.jpg" alt="Portrait of Joshua Hanneson" width="800" height="800" loading="lazy">
+          </div>
+        </figure>
+
+        <div class="about-copy" data-reveal>
+          <p class="eyebrow">About me</p>
+          <h2 id="about-title">Hi, I'm Joshua!</h2>
+          <p>
+            I&rsquo;m an Edmonton-based indie developer with a background in 3D modeling, music composition,
+            programming and UX design. I&rsquo;ve shipped several titles, including Acorn Island and A Crabby Adventure,
+            and released my first commercial game, Ghostie Town.
+          </p>
+          <p>
+            I have a background in engineering, worked at two start-ups, designed websites and UX flows, written documentation
+            at a bank, made sales cold calls, and managed students and contractors.
+          </p>
+          <ul class="chips" aria-label="Toolkit">
+            <li>Unity</li><li>C#</li><li>Godot</li><li>Blender</li><li>Maya</li><li>Git</li>
+            <li>Shaders &amp; VFX</li><li>Level design</li><li>UX</li><li>Agile &amp; kanban</li><li>Social content</li><li>Steam &amp; Next Fest</li>
+          </ul>
+          <div class="btn-row">
+            <!-- TODO: add resume.pdf next to index.html -->
+            <a class="btn btn-accent" href="resume.pdf" download>Download r&eacute;sum&eacute;</a>
+            <a class="btn btn-outline" href="https://www.linkedin.com/in/joshuahanneson" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- SKILLS: what I bring to a team -->
-    <section class="section" id="skills" aria-labelledby="skills-title">
+    <section class="section section-alt" id="skills" aria-labelledby="skills-title">
       <div class="container">
         <header class="section-head" data-reveal>
           <p class="eyebrow">Work with me</p>
@@ -280,40 +314,6 @@
           Interested in working with me?
           <a href="#contact">Get in touch &rarr;</a>
         </p>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="section section-alt" id="about" aria-labelledby="about-title">
-      <div class="container about-grid">
-        <figure class="about-media" data-reveal>
-          <div class="media media-square" data-label="joshua-portrait.jpg">
-            <img src="images/joshua-portrait.jpg" alt="Portrait of Joshua Hanneson" width="800" height="800" loading="lazy">
-          </div>
-        </figure>
-
-        <div class="about-copy" data-reveal>
-          <p class="eyebrow">About me</p>
-          <h2 id="about-title">A developer who ships, and can also sell.</h2>
-          <p>
-            I&rsquo;m an Edmonton-based indie developer with a background in 3D modeling, music composition,
-            programming and UX design. I&rsquo;ve shipped several titles, including Acorn Island and A Crabby Adventure,
-            and released my first commercial game, Ghostie Town.
-          </p>
-          <p>
-            I have a background in engineering, worked at two start-ups, designed websites and UX flows, wrote documentation
-            at a bank, made sales cold calls, and managed students and contractors.
-          </p>
-          <ul class="chips" aria-label="Toolkit">
-            <li>Unity</li><li>C#</li><li>Godot</li><li>Blender</li><li>Maya</li><li>Git</li>
-            <li>Shaders &amp; VFX</li><li>Level design</li><li>UX</li><li>Agile &amp; kanban</li><li>Social content</li><li>Steam &amp; Next Fest</li>
-          </ul>
-          <div class="btn-row">
-            <!-- TODO: add resume.pdf next to index.html -->
-            <a class="btn btn-accent" href="resume.pdf" download>Download r&eacute;sum&eacute;</a>
-            <a class="btn btn-outline" href="https://www.linkedin.com/in/joshuahanneson" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -358,10 +358,10 @@
         <p class="eyebrow">Contact</p>
         <h2 id="contact-title">Interested in connecting? Reach out.</h2>
         <div class="btn-row">
-          <a class="btn btn-primary" href="mailto:jshanneson@gmail.com">jshanneson@gmail.com</a>
+          <!-- Address is written as HTML character codes so basic spam scrapers don't find it; browsers decode it normally. -->
+          <a class="btn btn-primary" href="&#x6d;a&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#x73;&#x68;&#x61;&#x6e;&#x6e;&#x65;&#x73;&#x6f;&#x6e;&#x40;&#x67;&#x6d;&#x61;i&#x6c;&#x2e;c&#x6f;&#x6d;">Email</a>
           <a class="btn btn-outline" href="https://www.linkedin.com/in/joshuahanneson" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <p class="contact-copy-row"><button type="button" class="copy-btn" data-copy="jshanneson@gmail.com">Copy email address</button></p>
        </div>
       </div>
     </section>
