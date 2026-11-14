@@ -321,9 +321,16 @@ ul, ol { margin: 0; padding: 0; }
 .site-footer { background: var(--bg-alt); color: var(--muted); padding: 44px 0 20px; }
 .footer-cta { max-width: 640px; color: var(--ink); }
 .footer-cta h2 { font-size: 1.5rem; }
+.page-project .footer-cta h2 { font-size: 1.4rem; }
 .footer-cta p { color: var(--ink); }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 0.82rem; }
 .footer-inner p { margin: 0; color: var(--muted); }
+
+/* Home page contact footer: about 60% of the screen, so clicking Contact makes it the focus without a huge empty block.
+   The call to action sits in the middle; the copyright line stays at the bottom. */
+#contact { min-height: 60vh; min-height: 60svh; padding-bottom: 32px; display: flex; flex-direction: column; }
+#contact > .container { flex: 1; display: flex; flex-direction: column; }
+#contact .footer-cta { margin-block: auto; }
 
 /* --------------------------------------------------------------------------
    Project (case study) pages
@@ -469,7 +476,8 @@ ul, ol { margin: 0; padding: 0; }
   .site-nav .nav-cta { margin: 0 0 0 8px; padding: 8px 20px; }
 
   .section { padding: 64px 0; }
-  .section h2 { font-size: 1.9rem; }
+  .section h2, .footer-cta h2 { font-size: 1.9rem; }
+  .page-project .footer-cta h2 { font-size: 1.4rem; }
   .hero { padding: 72px 0 80px; }
   .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 48px; }
   .hero h1 { font-size: 3rem; }
@@ -504,6 +512,6 @@ ul, ol { margin: 0; padding: 0; }
 @media (max-width: 899px) {
   .hero h1, .section h2, .feature-body h3 { text-align: center; }
   .about-media { width: 220px; margin: 0 auto; }   /* explicit width: auto side margins would shrink the figure to nothing */
-  .footer-cta.contact-simple { text-align: center; margin: 0 auto; }
+  .footer-cta.contact-simple { text-align: center; margin-inline: auto; }
   .contact-simple .btn-row { justify-content: center; }
 }
