@@ -27,7 +27,6 @@
     initHero();
     initHeroCarousel();
     initReveal();
-    initCounts();
     initCarousels();
     initActiveLinks();
     initTracks();
@@ -106,9 +105,9 @@
     });
   }
 
-  /* Missing images: remove the broken <img> so the labelled placeholder shows */
+  /* Missing images: remove the broken <img> so the labelled placeholder shows (button icons just disappear) */
   function initImages() {
-    all('.media img').forEach(function (img) {
+    all('.media img, .btn-icon').forEach(function (img) {
       function drop() { if (img.parentNode) img.parentNode.removeChild(img); }
       img.addEventListener('error', drop);
       if (img.complete && img.naturalWidth === 0) drop();
@@ -124,9 +123,9 @@
       Array.prototype.slice.call(node.childNodes).forEach(function (child) {
         if (child.nodeType === 3) {
           var frag = document.createDocumentFragment();
-          child.textContent.split(/(\s+)/).forEach(function (part) {
+          child.textContent.split(/([ \t\r\n]+)/).forEach(function (part) {
             if (!part) return;
-            if (/^\s+$/.test(part)) {
+            if (/^[ \t\r\n]+$/.test(part)) {
               frag.appendChild(document.createTextNode(' '));
             } else {
               var span = document.createElement('span');
@@ -177,10 +176,10 @@
 
   /* ------------------------------------------------------------ hero slideshow */
 
-  /* Cross-fading slideshow in the hero: dots with a progress fill, translucent arrows,
-     swipe and arrow keys. Autoplays (5s per slide) but pauses on hover, keyboard focus,
-     when scrolled out of view, when the tab is hidden, or when the visitor hits pause.
-     Visitors who prefer reduced motion get no autoplay. */
+  /* Cross-fading slideshow in the hero: dots underneath, arrows, swipe and arrow keys.
+     Autoplays (5s per slide) but holds still while the mouse is over it, keyboard focus is
+     inside it, it is scrolled out of view, or the tab is hidden. Visitors who prefer reduced
+     motion get no autoplay. */
   function initHeroCarousel() {
     var box = document.querySelector('[data-hero-carousel]');
     if (!box) return;
@@ -188,7 +187,7 @@
     var stage = box.querySelector('.hero-slides');
     var prevBtn = box.querySelector('.hc-prev');
     var nextBtn = box.querySelector('.hc-next');
-    var DWELL = 5; // seconds per slide
+    var DWELL = 5000; // ms per slide
 
     if (slides.length < 2) {
       if (prevBtn) prevBtn.hidden = true;
@@ -197,99 +196,66 @@
     }
 
     var current = 0;
-    var userPaused = false, hovering = false, focused = false, offscreen = false, tabHidden = false;
-    var autoplay = !reduceMotion;
-    var leaveTimer = null;
+    var hovering = false, focused = false, offscreen = false, tabHidden = false;
+    var timer = null, leaveTimer = null;
 
-    // Controls under the image: dots + pause button
-    var controls = document.createElement('div');
-    controls.className = 'hc-controls';
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'dots';
     var dots = slides.map(function (s, i) {
       var d = document.createElement('button');
       d.type = 'button';
-      d.className = 'hc-dot';
+      d.className = 'dot';
       d.setAttribute('aria-label', 'Show image ' + (i + 1) + ' of ' + slides.length);
-      d.innerHTML = '<span class="hc-fill"></span>';
-      d.addEventListener('click', function () { goTo(i, true); });
-      controls.appendChild(d);
+      d.addEventListener('click', function () { goTo(i); });
+      dotsWrap.appendChild(d);
       return d;
     });
-    var pauseBtn = document.createElement('button');
-    pauseBtn.type = 'button';
-    pauseBtn.className = 'hc-pause';
-    pauseBtn.hidden = !autoplay;
-    stage.appendChild(pauseBtn);
-    box.appendChild(controls);
+    box.appendChild(dotsWrap);
 
-    var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>';
-    var ICON_PLAY = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
+    function holding() { return reduceMotion || hovering || focused || offscreen || tabHidden; }
 
-    function syncState() {
-      var paused = !autoplay || userPaused || hovering || focused || offscreen || tabHidden;
-      box.classList.toggle('is-paused', paused);
-      box.classList.toggle('is-manual', !autoplay || userPaused);
-      stage.setAttribute('aria-live', (!autoplay || userPaused || paused) ? 'polite' : 'off');
-      // Only touch the button when its state changes: swapping the icon mid-click would cancel the click
-      if (pauseBtn.getAttribute('data-state') !== (userPaused ? 'play' : 'pause')) {
-        pauseBtn.setAttribute('data-state', userPaused ? 'play' : 'pause');
-        pauseBtn.innerHTML = userPaused ? ICON_PLAY : ICON_PAUSE;
-        pauseBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
-      }
+    function schedule() {
+      window.clearTimeout(timer);
+      if (holding()) return;
+      timer = window.setTimeout(function () { goTo(current + 1); }, DWELL);
     }
 
-    function goTo(i, manual) {
+    function goTo(i) {
       i = (i + slides.length) % slides.length;
-      if (i === current && slides[current].classList.contains('is-active')) {
-        restartProgress();
-        return;
+      if (i !== current) {
+        var old = slides[current];
+        slides.forEach(function (s) { s.classList.remove('is-leaving'); });
+        old.classList.remove('is-active');
+        old.classList.add('is-leaving');
+        window.clearTimeout(leaveTimer);
+        leaveTimer = window.setTimeout(function () { old.classList.remove('is-leaving'); }, 950);
+        current = i;
+        slides[current].classList.add('is-active');
       }
-      var old = slides[current];
-      slides.forEach(function (s) { s.classList.remove('is-leaving'); });
-      old.classList.remove('is-active');
-      old.classList.add('is-leaving');
-      window.clearTimeout(leaveTimer);
-      leaveTimer = window.setTimeout(function () { old.classList.remove('is-leaving'); }, 950);
-
-      current = i;
-      slides[current].classList.add('is-active');
       dots.forEach(function (d, n) {
         d.classList.toggle('is-active', n === current);
         if (n === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
       });
-      restartProgress();
+      schedule();
     }
 
-    // The dot's fill animation doubles as the autoplay timer: when it ends, go to the next slide.
-    function restartProgress() {
-      var fill = dots[current].querySelector('.hc-fill');
-      fill.style.animation = 'none';
-      void fill.offsetWidth; // reflow so the animation restarts
-      fill.style.animation = '';
-    }
-    dots.forEach(function (d, i) {
-      d.querySelector('.hc-fill').addEventListener('animationend', function () {
-        if (autoplay && !userPaused && i === current) goTo(current + 1);
-      });
-    });
-
-    prevBtn.addEventListener('click', function () { goTo(current - 1, true); });
-    nextBtn.addEventListener('click', function () { goTo(current + 1, true); });
-    pauseBtn.addEventListener('click', function () { userPaused = !userPaused; syncState(); });
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
 
     // Keyboard: left / right arrows while focus is inside the slideshow
     box.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { goTo(current - 1, true); e.preventDefault(); }
-      else if (e.key === 'ArrowRight') { goTo(current + 1, true); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { goTo(current - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { goTo(current + 1); e.preventDefault(); }
     });
 
-    // Pause while a mouse is over it or keyboard focus is inside (touch taps do not count as hover)
-    box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hovering = true; syncState(); } });
-    box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; syncState(); } });
+    // Hold while a mouse is over it or keyboard focus is inside (touch taps do not count as hover)
+    box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hovering = true; schedule(); } });
+    box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; schedule(); } });
     box.addEventListener('focusin', function (e) {
       try { focused = e.target.matches(':focus-visible'); } catch (err) { focused = true; }
-      syncState();
+      schedule();
     });
-    box.addEventListener('focusout', function () { focused = false; syncState(); });
+    box.addEventListener('focusout', function () { focused = false; schedule(); });
 
     // Swipe on touch screens
     var startX = null, startY = null;
@@ -297,19 +263,11 @@
       if (e.pointerType === 'mouse') return;
       startX = e.clientX; startY = e.clientY;
     });
-    var tapTimer = null;
     stage.addEventListener('pointerup', function (e) {
       if (startX === null) return;
       var dx = e.clientX - startX, dy = e.clientY - startY;
       startX = startY = null;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-        goTo(current + (dx < 0 ? 1 : -1), true);
-      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && !e.target.closest('.hc-pause, .hc-arrow')) {
-        // Touch screens have no hover: a tap shows the pause button for a moment
-        stage.classList.add('show-controls');
-        window.clearTimeout(tapTimer);
-        tapTimer = window.setTimeout(function () { stage.classList.remove('show-controls'); }, 2800);
-      }
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goTo(current + (dx < 0 ? 1 : -1));
     });
     stage.addEventListener('pointercancel', function () { startX = startY = null; });
 
@@ -317,16 +275,13 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         offscreen = !entries[0].isIntersecting;
-        syncState();
+        schedule();
       }, { threshold: 0.25 }).observe(box);
     }
-    document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; syncState(); });
+    document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; schedule(); });
 
     root.classList.add('hc-ready');
-    box.style.setProperty('--hc-time', DWELL + 's');
-    dots[0].classList.add('is-active');
-    dots[0].setAttribute('aria-current', 'true');
-    syncState();
+    goTo(0);
   }
 
   /* ----------------------------------------------------------- scroll reveals */
@@ -361,49 +316,10 @@
     window.addEventListener('beforeprint', markAllIn);
   }
 
-  /* Count-up for the stat numbers, once, the first time they are seen */
-  function initCounts() {
-    var els = all('.stat-num[data-count]');
-    if (!els.length || !animate) return;
-
-    function format(n) { return n.toLocaleString('en-US'); }
-
-    els.forEach(function (el) {
-      var target = parseInt(el.getAttribute('data-count'), 10);
-      var suffix = el.getAttribute('data-suffix') || '';
-      if (isNaN(target)) return;
-      el.textContent = '0' + suffix;
-    });
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        observer.unobserve(el);
-
-        var target = parseInt(el.getAttribute('data-count'), 10);
-        var suffix = el.getAttribute('data-suffix') || '';
-        var duration = 1500;
-        var begin = null;
-
-        function tick(now) {
-          if (begin === null) begin = now;
-          var t = Math.min((now - begin) / duration, 1);
-          var eased = 1 - Math.pow(1 - t, 3);
-          el.textContent = format(Math.round(target * eased)) + suffix;
-          if (t < 1) window.requestAnimationFrame(tick);
-        }
-        window.setTimeout(function () { window.requestAnimationFrame(tick); }, 400);
-      });
-    }, { threshold: 0.6 });
-
-    els.forEach(function (el) { observer.observe(el); });
-  }
-
   /* --------------------------------------------------------------- carousels */
 
-  /* On phones and tablets the project rows scroll sideways and snap to a card.
-     This adds previous/next buttons and dots (hidden on desktop by CSS). */
+  /* On phones and tablets the project row scrolls sideways and snaps to a card.
+     This adds a row of dots under it (hidden on desktop by CSS). */
   function initCarousels() {
     all('[data-carousel]').forEach(function (carousel) {
       var track = carousel.querySelector('.carousel-track');
@@ -411,39 +327,21 @@
       var cards = Array.prototype.slice.call(track.children);
       if (cards.length < 2) return;
 
-      var controls = document.createElement('div');
-      controls.className = 'carousel-controls';
-
-      var prev = document.createElement('button');
-      prev.type = 'button'; prev.className = 'carousel-btn'; prev.setAttribute('aria-label', 'Previous project');
-      prev.textContent = '‹';
-
-      var next = document.createElement('button');
-      next.type = 'button'; next.className = 'carousel-btn'; next.setAttribute('aria-label', 'Next project');
-      next.textContent = '›';
-
       var dotsWrap = document.createElement('div');
-      dotsWrap.className = 'carousel-dots';
+      dotsWrap.className = 'dots';
       var dots = cards.map(function (card, i) {
         var dot = document.createElement('button');
-        dot.type = 'button'; dot.className = 'carousel-dot';
+        dot.type = 'button'; dot.className = 'dot';
         dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
         dot.addEventListener('click', function () { goTo(i); });
         dotsWrap.appendChild(dot);
         return dot;
       });
-
-      controls.appendChild(prev);
-      controls.appendChild(dotsWrap);
-      controls.appendChild(next);
-      carousel.appendChild(controls);
-
-      var active = 0;
+      carousel.appendChild(dotsWrap);
 
       function padLeft() { return parseFloat(window.getComputedStyle(track).paddingLeft) || 0; }
 
       function goTo(i) {
-        i = Math.max(0, Math.min(cards.length - 1, i));
         track.scrollTo({ left: cards[i].offsetLeft - padLeft(), behavior: reduceMotion ? 'auto' : 'smooth' });
       }
 
@@ -455,10 +353,7 @@
           if (dist < bestDist) { bestDist = dist; best = i; }
         });
         if (x + track.clientWidth >= track.scrollWidth - 4) best = cards.length - 1; // scrolled to the end
-        active = best;
-        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
-        prev.disabled = active === 0;
-        next.disabled = active === cards.length - 1;
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === best); });
       }
 
       var ticking = false;
@@ -468,9 +363,6 @@
         window.requestAnimationFrame(function () { update(); ticking = false; });
       }, { passive: true });
       window.addEventListener('resize', update);
-
-      prev.addEventListener('click', function () { goTo(active - 1); });
-      next.addEventListener('click', function () { goTo(active + 1); });
       update();
     });
   }
@@ -485,11 +377,7 @@
     if (!links.length) return;
 
     var map = {};
-    links.forEach(function (a) {
-      map[a.getAttribute('href').slice(1)] = a;
-      var also = a.getAttribute('data-also');   // e.g. "Work" link targets #featured but stays lit across #work
-      if (also) map[also] = a;
-    });
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
     var sections = Object.keys(map)
       .map(function (id) { return document.getElementById(id); })
       .filter(Boolean);
@@ -531,5 +419,4 @@
     });
   }
 
-  /* ------------------------------------------------------------------ contact */
 })();

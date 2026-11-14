@@ -67,14 +67,6 @@
     return (list || []).map(function (t) { return reveal(h('p', { text: t })); });
   }
 
-  function countAttrs(value) {
-    var m = /^([\d,]+)(\+?)$/.exec(String(value));
-    if (!m) return {};
-    var attrs = { 'data-count': m[1].replace(/,/g, '') };
-    if (m[2]) attrs['data-suffix'] = '+';
-    return attrs;
-  }
-
   /* ---------- page ---------- */
 
   function render(p) {
@@ -123,8 +115,6 @@
     if (p.results && p.results.length) {
       var items = p.results.map(function (r) {
         var attrs = { 'class': 'stat-num', text: r.value };
-        var c = countAttrs(r.value);
-        Object.keys(c).forEach(function (k) { attrs[k] = c[k]; });
         return h('li', {}, [h('span', attrs), h('span', { 'class': 'stat-label', text: r.label })]);
       });
       frag.appendChild(h('section', { 'class': 'proj-section' }, [
@@ -175,15 +165,6 @@
         h('a', { href: 'project.html?p=' + encodeURIComponent(next.slug), 'class': 'pager-link pager-next' }, [
           h('span', { text: 'Next →' }), h('strong', { text: next.title })
         ])
-      ])
-    ]));
-
-    /* Call to action */
-    frag.appendChild(h('section', { 'class': 'cta-band' }, [
-      h('div', { 'class': 'container cta-inner', 'data-reveal-group': '' }, [
-        h('h2', { text: 'Looking for a game designer for your team?' }),
-        h('p', { text: 'I bring design, production and launch experience from shipping my own game.' }),
-        h('div', {}, [h('a', { 'class': 'btn btn-primary', href: 'index.html#contact', text: 'Work with me' })])
       ])
     ]));
 
