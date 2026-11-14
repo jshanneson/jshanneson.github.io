@@ -513,5 +513,5 @@ ul, ol { margin: 0; padding: 0; }
   .hero h1, .section h2, .feature-body h3 { text-align: center; }
   .about-media { width: 220px; margin: 0 auto; }   /* explicit width: auto side margins would shrink the figure to nothing */
   .footer-cta.contact-simple { text-align: center; margin-inline: auto; }
-  .contact-simple .btn-row { justify-content: center; }
+  .contact-simple .btn-row, .hero .btn-row, .about-grid .btn-row { justify-content: center; }
 }
