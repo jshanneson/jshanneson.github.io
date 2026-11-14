@@ -86,6 +86,8 @@
     nav.addEventListener('click', function (e) {
       if (e.target.closest('a')) setOpen(false);
     });
+    var brand = document.querySelector('.brand');   // the name link sits outside the menu but should close it too
+    if (brand) brand.addEventListener('click', function () { setOpen(false); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') setOpen(false);
     });
