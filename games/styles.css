@@ -427,10 +427,9 @@ ul, ol { margin: 0; padding: 0; }
 
   .js:not(.no-anim) [data-reveal]:not(.is-in),
   .js:not(.no-anim) [data-reveal-group] > :not(.is-in) { transform: translateY(40px); }
-  .js:not(.no-anim) [data-hero]:not(.is-in):not([data-hero="split"]) { transform: translateY(34px); }
-  /* Fade-only elements (hero image, previous/next cards) do not move */
-  .js:not(.no-anim) [data-reveal="fade"]:not(.is-in),
-  .js:not(.no-anim) [data-hero="image"]:not(.is-in) { transform: none; }
+  /* The hero image and the previous/next cards are fade-only: they never move */
+  .js:not(.no-anim) [data-hero]:not(.is-in):not([data-hero="split"]):not([data-hero="image"]) { transform: translateY(34px); }
+  .js:not(.no-anim) [data-reveal="fade"]:not(.is-in) { transform: none; }
   /* A snapping scroller chases cards that are still moving (visible jump), so snap stays off until they land */
   .js:not(.no-anim) .carousel-track[data-reveal-group]:not(.reveal-done) { scroll-snap-type: none; }
 
