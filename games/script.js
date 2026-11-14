@@ -24,6 +24,7 @@
     initNav();
     initBackToTop();
     initImages();
+    startHeroImageWatch();
     initHero();
     initHeroCarousel();
     initReveal();
@@ -148,6 +149,31 @@
     return count;
   }
 
+  /* Runs callback once the first hero image has loaded and decoded (or after a 3s cap, so a slow or
+     missing file never leaves the hero blank). Big GIFs take a moment to download and decode; starting the
+     fade before then makes the picture pop in halfway through it. */
+  var heroReady = false, heroWaiters = [];
+  function whenHeroImageReady(cb) {
+    if (heroReady) { cb(); return; }
+    heroWaiters.push(cb);
+  }
+  function startHeroImageWatch() {
+    var img = document.querySelector('.hero-slide img');
+    function release() {
+      if (heroReady) return;
+      heroReady = true;
+      heroWaiters.splice(0).forEach(function (cb) { cb(); });
+    }
+    window.setTimeout(release, 3000);
+    if (!img) { release(); return; }
+    function decoded() {
+      if (img.decode) img.decode().then(release, release); else release();
+    }
+    if (img.complete) { decoded(); return; }
+    img.addEventListener('load', decoded);
+    img.addEventListener('error', release);
+  }
+
   function initHero() {
     var items = all('[data-hero]');
     if (!items.length) return;
@@ -162,7 +188,7 @@
       var kind = el.getAttribute('data-hero');
 
       if (kind === 'image') {
-        animateIn(el, 0.25);
+        whenHeroImageReady(function () { animateIn(el, 0.1); });
       } else if (kind === 'split') {
         var step = 0.075;
         var words = splitWords(el, cursor, step);
@@ -214,7 +240,8 @@
     });
     box.appendChild(dotsWrap);
 
-    function holding() { return reduceMotion || hovering || focused || offscreen || tabHidden; }
+    var loaded = false;   // the other slides and autoplay wait until the first image is ready
+    function holding() { return !loaded || reduceMotion || hovering || focused || offscreen || tabHidden; }
 
     function schedule() {
       window.clearTimeout(timer);
@@ -282,8 +309,12 @@
     }
     document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; schedule(); });
 
-    root.classList.add('hc-ready');
     goTo(0);
+    whenHeroImageReady(function () {
+      loaded = true;
+      root.classList.add('hc-ready');   // un-hides slides 2+, so their files only start downloading now
+      schedule();
+    });
   }
 
   /* ----------------------------------------------------------- scroll reveals */
