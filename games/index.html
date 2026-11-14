@@ -26,8 +26,9 @@
     IMAGE PLACEHOLDERS: drop files with these names into an /images folder.
     Until then each slot shows a labelled placeholder.
 
-      ghostie-town-hero.png         (wide key art / screenshot, ~1600x900; hero slide 1 and the featured card)
-      hero-2.png  hero-3.png  hero-4.png   (hero slideshow, ~1600x900; .gif also works, edit the src in the hero)
+      ghostie-town-hero.png         (wide key art / screenshot, ~1600x900; the featured card)
+      /video/*.mp4                  (hero slideshow clips: short, muted, compressed to a few MB each; see the <video> tags)
+      
       acorn-island.png  jam-jar-lid.png  hive.png
       a-crabby-adventure.png  invending-doom.png   (~1280x800 each)
       joshua-portrait.jpg           (square-ish, ~800x800)
@@ -81,33 +82,33 @@
 
         <figure class="hero-media" data-hero="image">
           <!-- HERO SLIDESHOW: 3-5 slides. Copy a .hero-slide block to add one, delete one to remove it.
-               Files go in /images. For a GIF just point src at the .gif (and update data-label).
+               Clips go in /video (muted H.264 .mp4, a few MB each). Only the visible slide plays.
                The dots, arrows and timing are built by script.js from whatever slides are here. -->
           <div class="hero-carousel" data-hero-carousel role="region" aria-roledescription="carousel" aria-label="Featured work">
             <div class="hero-slides">
             <div class="hero-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 5">
-              <div class="media" data-label="Ghostie_Town3.gif">
-                <img src="images/Ghostie_Town3.gif" alt="A small ghost holding a broom in the lantern-lit streets of Ghostie Town" width="1600" height="900">
+              <div class="media" data-label="Ghostie_Town1.mp4">
+                <video src="video/Ghostie_Town1.mp4" muted loop playsinline preload="auto" aria-label="A small ghost holding a broom in the lantern-lit streets of Ghostie Town" width="1600" height="900"></video>
               </div>
             </div>
             <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
-              <div class="media" data-label="Invending_Doom1.gif">
-                <img src="images/Invending_Doom1.gif" alt="TODO: describe image 2" width="1600" height="900" loading="lazy">
+              <div class="media" data-label="Invending_Doom1.mp4">
+                <video src="video/Invending_Doom1.mp4" muted loop playsinline preload="none" aria-label="TODO: describe image 2" width="1600" height="900"></video>
               </div>
             </div>
             <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
-              <div class="media" data-label="Crabby_Adventure2.gif">
-                <img src="images/Crabby_Adventure2.gif" alt="TODO: describe image 3" width="1600" height="900" loading="lazy">
+              <div class="media" data-label="Crabby_Adventure1.mp4">
+                <video src="video/Crabby_Adventure1.mp4" muted loop playsinline preload="none" aria-label="TODO: describe image 3" width="1600" height="900"></video>
               </div>
             </div>
             <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
-              <div class="media" data-label="Acorn_Island1.gif">
-                <img src="images/Acorn_Island1.gif" alt="TODO: describe image 4" width="1600" height="900" loading="lazy">
+              <div class="media" data-label="Acorn_Island1.mp4">
+                <video src="video/Acorn_Island1.mp4" muted loop playsinline preload="none" aria-label="TODO: describe image 4" width="1600" height="900"></video>
               </div>
             </div>
             <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
-              <div class="media" data-label="Juggle_Puzzle_Struggle1.gif">
-                <img src="images/Juggle_Puzzle_Struggle1.gif" alt="TODO: describe image 2" width="1600" height="900" loading="lazy">
+              <div class="media" data-label="Juggle_Puzzle_Struggle1.mp4">
+                <video src="video/Juggle_Puzzle_Struggle1.mp4" muted loop playsinline preload="none" aria-label="TODO: describe image 2" width="1600" height="900"></video>
               </div>
             </div>
             </div>

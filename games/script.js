@@ -110,10 +110,10 @@
 
   /* Missing images: remove the broken <img> so the labelled placeholder shows (button icons just disappear) */
   function initImages() {
-    all('.media img, .btn-icon').forEach(function (img) {
+    all('.media img, .media video, .btn-icon').forEach(function (img) {
       function drop() { if (img.parentNode) img.parentNode.removeChild(img); }
       img.addEventListener('error', drop);
-      if (img.complete && img.naturalWidth === 0) drop();
+      if (img.tagName === 'IMG' && img.complete && img.naturalWidth === 0) drop();
     });
   }
 
@@ -149,29 +149,35 @@
     return count;
   }
 
-  /* Runs callback once the first hero image has loaded and decoded (or after a 3s cap, so a slow or
-     missing file never leaves the hero blank). Big GIFs take a moment to download and decode; starting the
-     fade before then makes the picture pop in halfway through it. */
+  /* Runs callback once the first hero clip has its first frame ready (or after a 3s cap, so a slow or
+     missing file never leaves the hero blank). Starting the fade before then makes the picture pop in
+     halfway through it. Works for a <video> or an <img>. */
   var heroReady = false, heroWaiters = [];
   function whenHeroImageReady(cb) {
     if (heroReady) { cb(); return; }
     heroWaiters.push(cb);
   }
   function startHeroImageWatch() {
-    var img = document.querySelector('.hero-slide img');
+    var media = document.querySelector('.hero-slide video, .hero-slide img');
     function release() {
       if (heroReady) return;
       heroReady = true;
       heroWaiters.splice(0).forEach(function (cb) { cb(); });
     }
     window.setTimeout(release, 3000);
-    if (!img) { release(); return; }
-    function decoded() {
-      if (img.decode) img.decode().then(release, release); else release();
+    if (!media) { release(); return; }
+    if (media.tagName === 'VIDEO') {
+      if (media.readyState >= 2) { release(); return; }
+      media.addEventListener('loadeddata', release);
+      media.addEventListener('error', release);
+      return;
     }
-    if (img.complete) { decoded(); return; }
-    img.addEventListener('load', decoded);
-    img.addEventListener('error', release);
+    function decoded() {
+      if (media.decode) media.decode().then(release, release); else release();
+    }
+    if (media.complete) { decoded(); return; }
+    media.addEventListener('load', decoded);
+    media.addEventListener('error', release);
   }
 
   function initHero() {
@@ -241,6 +247,21 @@
     box.appendChild(dotsWrap);
 
     var loaded = false;   // the other slides and autoplay wait until the first image is ready
+    // Only the visible slide's clip plays (and only while the hero is on screen and the tab is showing)
+    var vids = slides.map(function (s) { var v = s.querySelector('video'); if (v) v.muted = true; return v; });
+    function syncVideo(i) {
+      var v = vids[i];
+      if (!v) return;
+      if (i === current && loaded && !reduceMotion && !offscreen && !tabHidden) {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { /* autoplay refused: the first frame stays showing */ });
+      } else if (i !== current && !slides[i].classList.contains('is-leaving')) {
+        v.pause();
+      } else if (i === current) {
+        v.pause();
+      }
+    }
+
     function holding() { return !loaded || reduceMotion || hovering || focused || offscreen || tabHidden; }
 
     function schedule() {
@@ -257,9 +278,15 @@
         old.classList.remove('is-active');
         old.classList.add('is-leaving');
         window.clearTimeout(leaveTimer);
-        leaveTimer = window.setTimeout(function () { old.classList.remove('is-leaving'); }, 950);
+        var oldIndex = slides.indexOf(old);
+        leaveTimer = window.setTimeout(function () {
+          old.classList.remove('is-leaving');
+          if (vids[oldIndex]) vids[oldIndex].pause();   // stop the old clip once it has faded out
+        }, 950);
         current = i;
+        if (vids[current]) { try { vids[current].currentTime = 0; } catch (err) { /* not loaded yet */ } }
         slides[current].classList.add('is-active');
+        syncVideo(current);
       }
       dots.forEach(function (d, n) {
         d.classList.toggle('is-active', n === current);
@@ -304,15 +331,20 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         offscreen = !entries[0].isIntersecting;
+        syncVideo(current);
         schedule();
       }, { threshold: 0.25 }).observe(box);
     }
-    document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; schedule(); });
+    document.addEventListener('visibilitychange', function () { tabHidden = document.hidden; syncVideo(current); schedule(); });
 
     goTo(0);
     whenHeroImageReady(function () {
       loaded = true;
-      root.classList.add('hc-ready');   // un-hides slides 2+, so their files only start downloading now
+      root.classList.add('hc-ready');   // un-hides slides 2+
+      vids.forEach(function (v) {        // slides 2+ only start downloading now, so they don't compete with slide 1
+        if (v && v.preload === 'none') { v.preload = 'auto'; v.load(); }
+      });
+      syncVideo(current);
       schedule();
     });
   }
