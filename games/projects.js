@@ -45,7 +45,7 @@ window.PROJECTS = [
 
     /* Each section: text on one side, images on the other (stacked under the text on phones).
        side: "right" or "left" = where the images sit on desktop.
-       layout: "stack" (default, images one above the other) or "trio" (one big image left, two stacked right). */
+       layout: "stack" (default, images one above the other) or "trio" (images 1 and 2 small and stacked on the left, image 3 large on the right). */
     sections: [
       {
         title: "Production Scope",
@@ -94,6 +94,30 @@ window.PROJECTS = [
           { src: "images/ghostie-town-progression.png", alt: "Miro board mapping tool progression and Town Appeal gates", caption: "Progression map with Town Appeal gates and multiple routes." },
           { src: "images/ghostie-town-leveling-pace.png", alt: "Spreadsheet modelling how fast the player levels up", caption: "Level-up pacing spreadsheet." }
         ]
+      },
+      {
+        title: "Narrative Design",
+        side: "right",
+        text: [
+          "I formalized the story into a three act structure so that every quest in the town pulls the player toward the same reveal. In Act I the player floats toward the town square and is blocked by a pile of dust. They pick up a broom in the back alley and Dustin, the streetsweeper ghost, is surprised, since most ghosts can't touch tools. That is the inciting incident, and it leads to the short-term goal of helping the remaining ghosties.",
+          "Act II sends the player through the town's districts. Each tool helps a ghostie with a problem and raises the Town Appeal level, which brings new residents and new stories. At the midpoint the player realizes the Heritage Fountain did not fall apart by itself: it was actively destroyed.",
+          "In Act III the player learns they were the one who destroyed it, the town's protector, who broke the fountain to stop time and keep everyone from leaving. The climax comes when they have to face that and overcome the philosophical stakes: repairing the fountain frees the ghosties to leave. The music swells, cuts to silence, and the town clock starts again. The ghosties choose to stay and finally hold their festival.",
+          "The game has two morals. If you want people to show up, give them a reason to want to be there and let them choose. And the effect of your actions on other people is what gives your actions purpose."
+        ],
+        images: [
+          { src: "images/ghostie-town-three-act-structure.png", alt: "Diagram of the three act structure showing the inciting incident, midpoint reversal and climax", caption: "Three act structure." }
+        ]
+      },
+      {
+        title: "Marketing",
+        side: "left",
+        text: [
+          "I marketed Ghostie Town while I was building it. I posted dev updates on [Instagram](https://instagram.com/ghostie_town) and [TikTok](https://www.tiktok.com/@ghostie_town/) for a year, and the first dev reel earned 4,000+ views with under 20 followers. I presented and playtested the game at GameCamp Edmonton and the Game Discovery Exhibition.",
+          "One early spike came from an unexpected place: a random person in Japan picked up the game on X and shared it. [That post](https://x.com/emu_game2020/status/2037824518261973001) reached 37k views and brought in 100+ Japanese wishlists.",
+          "Wishlists jumped again in the lead-up to launch, and streamers picked up the demo during Steam Next Fest. In total 6 people streamed the demo, for example [KeeperCGC](https://share.google/31cRu5sZaARuP9rps).",
+          "On launch day I sent out a large batch of emails and messages to get past the 10 review mark on the first day. I also sent Steam keys to streamers, and 2 people streamed the full game, for example [Elle pancake](https://www.twitch.tv/videos/2915567548).",
+          "To reach more players I also bundled the game with Little Ghosties, another cozy ghost game by a solo developer that launched a month before mine, and with three other local Edmonton indie developers."
+        ]
       }
     ],
 
@@ -109,12 +133,11 @@ window.PROJECTS = [
       "Playtests changed a core interaction. Watch what people do, not just what they say."
     ]
 
-    /* UNUSED COPY from the earlier version, in case you want it in the body later
-       (Instagram: https://instagram.com/ghostie_town  TikTok: https://www.tiktok.com/@ghostie_town/):
+    /* UNUSED COPY from the earlier version, in case you want it in the body later:
        - Playtest and polish: Virtual playtests showed that object selection felt wrong: with a simple trigger box the last object entered was selected, so players had to approach head-on. I replaced it with a list of nearby objects ranked by angle and distance. Small touches like dust particles and a trash-shake animation made repetitive chores satisfying.
-       - Market while building: Marketing ran alongside development, not after it. I posted on Instagram and TikTok for a year, and the first dev reel earned 4,000+ views with under 20 followers. I manned a booth at a consumer trade show, ran virtual playtests, took part in Steam Next Fest and co-promoted through bundles with other developers. Between 4 and 6 streamers played the game.
        - Launch on the date I promised: I committed to a Halloween-themed launch and hit it, with Steam achievements and the store page ready on day one.
        - Set a visual direction early: AI-generated concept images were used only as mood references (night time, low-poly, isometric, lavender and sage). Everything in the game was modelled and built by me.
+       - Marketing (older wording): manned a booth at a consumer trade show; between 4 and 6 streamers played the game.
     */
   },
 
@@ -134,7 +157,7 @@ window.PROJECTS = [
     ],
     image: "images/acorn-island.png",
     imageAlt: "A squirrel exploring a low-poly island with trees and water",
-    embed: { src: "https://itch.io/embed/1747995", width: 552, height: 167, title: "Acorn Island by jshanneson", linkUrl: "https://jshanneson.itch.io/acorn-island", linkText: "Acorn Island by jshanneson" },
+    embed: { src: "https://itch.io/embed/1747995?dark=true", width: 552, height: 167, title: "Acorn Island by jshanneson", linkUrl: "https://jshanneson.itch.io/acorn-island", linkText: "Acorn Island by jshanneson" },
 
     overview: [
       "This is a short game where you collect acorns on a procedurally generated island. There are ruins scattered throughout the islands that add some mystery to the island origins.",
@@ -182,7 +205,7 @@ window.PROJECTS = [
     ],
     image: "images/invending-doom.png",
     imageAlt: "Invending Doom screenshot",
-    embed: { src: "https://itch.io/embed/5064816", width: 552, height: 167, title: "INVENDING DOOM by jshanneson", linkUrl: "https://jshanneson.itch.io/invending-doom", linkText: "INVENDING DOOM by jshanneson" },
+    embed: { src: "https://itch.io/embed/5064816?dark=true", width: 552, height: 167, title: "INVENDING DOOM by jshanneson", linkUrl: "https://jshanneson.itch.io/invending-doom", linkText: "INVENDING DOOM by jshanneson" },
     overview: [
       "Play as a dinosaur collecting items as payment for a mysterious vending machine. Find the right item, and you will enjoy sodas with your friends! Bring back the wrong item... and face the wrath of the machine.",
       "My part: I made the 3D models and the sound design, and prepared the assets so they dropped straight into Godot ready to use."
@@ -208,7 +231,7 @@ window.PROJECTS = [
     ],
     image: "images/a-crabby-adventure.png",
     imageAlt: "A Crabby Adventure screenshot",
-    embed: { src: "https://itch.io/embed/3275604", width: 552, height: 167, title: "A Crabby Adventure by BitShaper, Aiden CC, jshanneson, Purrding", linkUrl: "https://bitshaper.itch.io/a-crabby-adventure", linkText: "A Crabby Adventure by BitShaper, Aiden CC, jshanneson, Purrding" },
+    embed: { src: "https://itch.io/embed/3275604?dark=true", width: 552, height: 167, title: "A Crabby Adventure by BitShaper, Aiden CC, jshanneson, Purrding", linkUrl: "https://bitshaper.itch.io/a-crabby-adventure", linkText: "A Crabby Adventure by BitShaper, Aiden CC, jshanneson, Purrding" },
     overview: [
       "This crab doesn't think it is better down where it's wetter, and wants to go catch some sunshine up on the beach!",
       "These waters are full of dangers! Don't let Bubbles get too close to the ocean mines or else the bubble won't be the only thing that pops! Be sure to stay clear of any scared pufferfish and spikes that lie in the ocean, one touch and you're out!",
@@ -234,7 +257,7 @@ window.PROJECTS = [
     ],
     image: "images/hive.png",
     imageAlt: "HIVE screenshot of an ant invading a hive",
-    embed: { src: "https://itch.io/embed/2537110", width: 552, height: 167, title: "HIVE by Achyuthsr, hl__ur, ReignyRen, jshanneson", linkUrl: "https://achyuthsr.itch.io/hive", linkText: "HIVE by Achyuthsr, hl__ur, ReignyRen, jshanneson" },
+    embed: { src: "https://itch.io/embed/2537110?dark=true", width: 552, height: 167, title: "HIVE by Achyuthsr, hl__ur, ReignyRen, jshanneson", linkUrl: "https://achyuthsr.itch.io/hive", linkText: "HIVE by Achyuthsr, hl__ur, ReignyRen, jshanneson" },
     overview: [
       "A thrilling and action-packed game where players take on the role of an ant warrior, navigating through intricate hive structures to invade and conquer rival ant colonies. Strategize and engage in fast-paced battles as you lead your colony to victory, overcoming obstacles and adversaries along the way. Will you rise as the ultimate ruler of the Hive or fall to the might of your enemies?",
       "My part: I programmed how the enemies move around the world using a nav mesh, and composed the music."
@@ -258,7 +281,7 @@ window.PROJECTS = [
     ],
     image: "images/jam-jar-lid.png",
     imageAlt: "Jam Jar Lid screenshot",
-    embed: { src: "https://itch.io/embed/1729003", width: 552, height: 167, title: "Jam Jar Lid by jshanneson", linkUrl: "https://jshanneson.itch.io/jam-jar-lid", linkText: "Jam Jar Lid by jshanneson" },
+    embed: { src: "https://itch.io/embed/1729003?dark=true", width: 552, height: 167, title: "Jam Jar Lid by jshanneson", linkUrl: "https://jshanneson.itch.io/jam-jar-lid", linkText: "Jam Jar Lid by jshanneson" },
     overview: [
       "You are a jar of jam... but you lost your jam jar lid! Better go find it...",
       "My part: I covered the 3D art, the programming and the level design. It plays right in the browser."
@@ -283,13 +306,13 @@ window.PROJECTS = [
     facts: [["Role", "..."], ["Tools", "..."], ["Team", "4 people"]],
     image: "images/my-new-game.png",        // main image, top right on desktop
     imageAlt: "Describe the image",
-    embed: { src: "https://itch.io/embed/123456", width: 552, height: 167, title: "My New Game on itch.io",
+    embed: { src: "https://itch.io/embed/123456?dark=true", width: 552, height: 167, title: "My New Game on itch.io",
              linkUrl: "https://...", linkText: "My New Game on itch.io" },   // shown under the main image
     overview: ["Paragraph one (shown at the top, left of the image).", "Paragraph two."],
     highlights: ["Short bullet", "Short bullet"],       // optional; shown as a "Highlights" list
     sections: [                                         // optional; text on one side, images on the other
       { title: "Section title", side: "right",          // side = where the images sit on desktop: "right" or "left"
-        layout: "stack",                                // "stack" (default) or "trio" (one big image, two stacked)
+        layout: "stack",                                // "stack" (default) or "trio" (two small stacked left, one large right)
         text: ["Paragraph one.", "Paragraph two."],
         images: [{ src: "images/step.png", alt: "...", caption: "..." }] }
     ],

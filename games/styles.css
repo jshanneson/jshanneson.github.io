@@ -357,13 +357,16 @@ ul, ol { margin: 0; padding: 0; }
 .proj-head-grid { display: grid; gap: 28px; }
 .proj-head-media { display: grid; gap: 14px; align-content: start; }
 .proj-overview { color: rgba(255, 255, 255, 0.88); max-width: 38rem; }
-.embed { width: 100%; }
-.embed iframe { display: block; width: 100%; border: 0; border-radius: var(--radius); }
+.embed { width: 100%; overflow: hidden; border-radius: var(--radius); }
+.embed-frame { transform-origin: 0 0; }
+.embed iframe { display: block; width: 100%; height: 100%; border: 0; }
 
 /* A section: text on one side, images on the other. On phones the images simply follow the text. */
 .proj-split { display: grid; gap: 22px; }
 .proj-text { max-width: 40rem; }
 .proj-text p { color: var(--ink); }
+.proj-text a { color: var(--lavender); text-decoration: underline; text-underline-offset: 3px; }
+.proj-text a:hover { color: #fff; }
 .proj-media { display: grid; gap: 14px; align-content: start; }
 .proj-split.no-media { grid-template-columns: 1fr; }
 
@@ -510,10 +513,12 @@ ul, ol { margin: 0; padding: 0; }
   .proj-split.no-media { grid-template-columns: 1fr; }
   .proj-media .media { aspect-ratio: 16 / 9; }
 
-  /* "trio": one large image on the left, two stacked on the right */
-  .layout-trio { grid-template-columns: 3fr 2fr; }
-  .layout-trio .proj-figure:first-child { grid-row: 1 / span 2; display: flex; flex-direction: column; }
-  .layout-trio .proj-figure:first-child .media { flex: 1; aspect-ratio: auto; min-height: 220px; }
+  /* "trio": two small images stacked on the left, one large image on the right (the one to emphasise) */
+  .layout-trio { grid-template-columns: 1fr 2fr; }
+  .layout-trio .proj-figure:nth-child(1) .media { aspect-ratio: 4 / 3; }
+  .layout-trio .proj-figure:nth-child(2) .media { aspect-ratio: 16 / 9; }
+  .layout-trio .proj-figure:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-direction: column; }
+  .layout-trio .proj-figure:nth-child(3) .media { flex: 1; aspect-ratio: auto; min-height: 220px; }
 }
 
 /* Phones and tablets (stacked layouts): headings and the portrait are centred;

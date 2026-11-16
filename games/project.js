@@ -52,13 +52,37 @@
     return h('figure', { 'class': 'proj-figure' }, [media, caption ? h('figcaption', { text: caption }) : null]);
   }
 
-  /* Store / itch.io widget, shown under the main image. Width is a maximum; it shrinks on narrow screens. */
+  /* Store / itch.io widget, shown under the main image.
+     The widget is kept at the exact size its host designed (e.g. 552x167) so it always lays out correctly
+     (no blank bar, no cut-off "compact" layout on narrow screens), then scaled down to fit the column. */
   function embedBox(e) {
-    var iframe = h('iframe', {
-      src: e.src, width: String(e.width), height: String(e.height),
-      title: e.title || 'Game page', loading: 'lazy'
-    }, [e.linkUrl ? h('a', { href: e.linkUrl, text: e.linkText || e.linkUrl }) : null]);
-    return h('div', { 'class': 'embed', style: 'max-width:' + e.width + 'px' }, [iframe]);
+    var iframe = h('iframe', { src: e.src, width: String(e.width), height: String(e.height), title: e.title || 'Game page' },
+      [e.linkUrl ? h('a', { href: e.linkUrl, text: e.linkText || e.linkUrl }) : null]);
+    var frame = h('div', { 'class': 'embed-frame', style: 'width:' + e.width + 'px;height:' + e.height + 'px' }, [iframe]);
+    var box = h('div', { 'class': 'embed', style: 'max-width:' + e.width + 'px;height:' + e.height + 'px' }, [frame]);
+
+    function fit() {
+      var scale = Math.min(1, box.clientWidth / e.width);
+      if (!scale) return;
+      frame.style.transform = 'scale(' + scale + ')';
+      box.style.height = Math.round(e.height * scale) + 'px';
+    }
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(box);
+    window.addEventListener('resize', fit);
+    window.setTimeout(fit, 0);
+    return box;
+  }
+
+  /* Text with [label](https://link) links, built as DOM nodes (no innerHTML) */
+  function inline(text) {
+    var out = [], re = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) out.push(text.slice(last, m.index));
+      out.push(h('a', { href: m[2], target: '_blank', rel: 'noopener', text: m[1] }));
+      last = re.lastIndex;
+    }
+    if (last < text.length) out.push(text.slice(last));
+    return out;
   }
 
   function reveal(node) {
@@ -118,7 +142,7 @@
       p.sections.forEach(function (s) {
         var texts = [].concat(s.text || []);
         var textBlock = h('div', { 'class': 'proj-text', 'data-reveal': '' },
-          [s.title ? h('h2', { text: s.title }) : null].concat(texts.map(function (t) { return h('p', { text: t }); })));
+          [s.title ? h('h2', { text: s.title }) : null].concat(texts.map(function (t) { return h('p', {}, inline(t)); })));
         var images = (s.images || []).map(function (im) { return figure(im.src, im.alt, im.caption); });
         var kids = [textBlock];
         if (images.length) {
