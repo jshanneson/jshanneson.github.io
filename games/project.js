@@ -46,9 +46,19 @@
   }
 
   function figure(src, alt, caption, label) {
-    var img = h('img', { src: src, alt: alt || '', loading: 'lazy', width: '1280', height: '800' });
+    // encodeURI so file names with spaces (e.g. "early town greyboxing3_annotated.png") still load
+    var img = h('img', { src: encodeURI(src), alt: alt || '', loading: 'lazy', width: '1280', height: '800' });
     var media = h('div', { 'class': 'media', 'data-label': label || src.split('/').pop() }, [img]);
     return h('figure', { 'class': 'proj-figure' }, [media, caption ? h('figcaption', { text: caption }) : null]);
+  }
+
+  /* Store / itch.io widget, shown under the main image. Width is a maximum; it shrinks on narrow screens. */
+  function embedBox(e) {
+    var iframe = h('iframe', {
+      src: e.src, width: String(e.width), height: String(e.height),
+      title: e.title || 'Game page', loading: 'lazy'
+    }, [e.linkUrl ? h('a', { href: e.linkUrl, text: e.linkText || e.linkUrl }) : null]);
+    return h('div', { 'class': 'embed', style: 'max-width:' + e.width + 'px' }, [iframe]);
   }
 
   function reveal(node) {
@@ -60,7 +70,7 @@
     var kids = [];
     if (title) kids.push(reveal(h('h2', { text: title })));
     children.forEach(function (c) { kids.push(c); });
-    return h('section', { 'class': 'proj-section' }, [h('div', { 'class': 'container narrow' }, kids)]);
+    return h('section', { 'class': 'proj-section' }, [h('div', { 'class': 'container' }, [h('div', { 'class': 'proj-text' }, kids)])]);
   }
 
   function paragraphs(list) {
@@ -72,66 +82,54 @@
   function render(p) {
     var frag = document.createDocumentFragment();
 
-    /* Header block (animates in on load) */
+    function hero(node, kind) { node.setAttribute('data-hero', kind || ''); return node; }
+
+    /* Top of the page: title, overview and facts on the left; main image and store widget on the right
+       (stacked on phones, in that order). Animates in on load. */
     var facts = (p.facts || []).map(function (pair) {
       return h('div', {}, [h('dt', { text: pair[0] }), h('dd', { text: pair[1] })]);
     });
 
-    var links = (p.links || []).map(function (l) {
-      return h('a', {
-        'class': 'btn btn-accent',
-        href: l.url, target: '_blank', rel: 'noopener', text: l.label
-      });
-    });
+    var textCol = h('div', { 'class': 'proj-head-text' }, [
+      hero(h('a', { 'class': 'crumb', href: 'index.html#work', text: '← All work' })),
+      hero(h('p', { 'class': 'badge', text: p.type })),
+      h('h1', { text: p.title, 'data-hero': 'split' })
+    ]);
+    (p.overview || []).forEach(function (t) { textCol.appendChild(hero(h('p', { 'class': 'proj-overview', text: t }))); });
+    if (facts.length) textCol.appendChild(hero(h('dl', { 'class': 'facts' }, facts)));
 
-    function hero(node) { node.setAttribute('data-hero', ''); return node; }
+    var mediaCol = h('div', { 'class': 'proj-head-media' });
+    if (p.image) mediaCol.appendChild(hero(figure(p.image, p.imageAlt, '', p.image.split('/').pop()), 'image'));
+    if (p.embed) mediaCol.appendChild(hero(embedBox(p.embed), 'image'));
 
     frag.appendChild(h('section', { 'class': 'proj-head' }, [
-      h('div', { 'class': 'container narrow' }, [
-        hero(h('a', { 'class': 'crumb', href: 'index.html#work', text: '← All work' })),
-        hero(h('p', { 'class': 'badge', text: p.type })),
-        h('h1', { text: p.title, 'data-hero': 'split' }),
-        p.tagline ? hero(h('p', { 'class': 'lead', text: p.tagline })) : null,
-        facts.length ? hero(h('dl', { 'class': 'facts' }, facts)) : null,
-        links.length ? hero(h('div', { 'class': 'btn-row' }, links)) : null
-      ])
+      h('div', { 'class': 'container proj-head-grid' }, mediaCol.children.length ? [textCol, mediaCol] : [textCol])
     ]));
 
-    if (p.image) {
-      var heroFig = figure(p.image, p.imageAlt, '', p.image.split('/').pop());
-      heroFig.setAttribute('data-hero', 'image');
-      frag.appendChild(h('div', { 'class': 'container proj-hero-media' }, [heroFig]));
-    }
-
-    /* Overview + highlights */
-    var overviewKids = paragraphs(p.overview);
+    /* Highlights (short bullets) */
     if (p.highlights && p.highlights.length) {
-      overviewKids.push(h('ul', { 'class': 'bullets', 'data-reveal': '' },
-        p.highlights.map(function (t) { return h('li', { text: t }); })));
-    }
-    if (overviewKids.length) frag.appendChild(section('Overview', overviewKids));
-
-    /* Results */
-    if (p.results && p.results.length) {
-      var items = p.results.map(function (r) {
-        var attrs = { 'class': 'stat-num', text: r.value };
-        return h('li', {}, [h('span', attrs), h('span', { 'class': 'stat-label', text: r.label })]);
-      });
-      frag.appendChild(h('section', { 'class': 'proj-section' }, [
-        h('div', { 'class': 'container narrow' }, [reveal(h('ul', { 'class': 'stats stats-panel' }, items))])
+      frag.appendChild(section('Highlights', [
+        h('ul', { 'class': 'bullets', 'data-reveal': '' }, p.highlights.map(function (t) { return h('li', { text: t }); }))
       ]));
     }
 
-    /* Process */
-    if (p.process && p.process.length) {
-      var steps = p.process.map(function (s) {
-        return reveal(h('li', { 'class': 'step' }, [
-          h('h3', { text: s.title }),
-          h('p', { text: s.text }),
-          s.image ? figure(s.image, s.imageAlt, s.caption) : null
+    /* Sections: text on one side, images on the other */
+    if (p.sections && p.sections.length) {
+      p.sections.forEach(function (s) {
+        var texts = [].concat(s.text || []);
+        var textBlock = h('div', { 'class': 'proj-text', 'data-reveal': '' },
+          [s.title ? h('h2', { text: s.title }) : null].concat(texts.map(function (t) { return h('p', { text: t }); })));
+        var images = (s.images || []).map(function (im) { return figure(im.src, im.alt, im.caption); });
+        var kids = [textBlock];
+        if (images.length) {
+          kids.push(h('div', { 'class': 'proj-media layout-' + (s.layout || 'stack'), 'data-reveal-group': '' }, images));
+        }
+        frag.appendChild(h('section', { 'class': 'proj-section' }, [
+          h('div', { 'class': 'container' }, [
+            h('div', { 'class': 'proj-split side-' + (s.side === 'left' ? 'left' : 'right') + (images.length ? '' : ' no-media') + (s.layout === 'trio' ? ' wide-media' : '') }, kids)
+          ])
         ]));
       });
-      frag.appendChild(section('How it came together', [h('ol', { 'class': 'steps' }, steps)]));
     } else {
       frag.appendChild(section('', [reveal(h('p', { 'class': 'coming-soon', text: 'A fuller write-up of this project is coming soon.' }))]));
     }

@@ -335,7 +335,7 @@ ul, ol { margin: 0; padding: 0; }
 /* --------------------------------------------------------------------------
    Project (case study) pages
    -------------------------------------------------------------------------- */
-.proj-head { background: var(--bg-alt); padding: 28px 0 32px; }
+.proj-head { background: var(--bg-alt); padding: 28px 0 36px; }
 .crumb { display: block; width: fit-content; margin-bottom: 18px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85); text-decoration: none; }
 .crumb:hover { color: var(--lavender); }
 .proj-head h1 { font-size: 2rem; margin-bottom: 0.3em; }
@@ -344,7 +344,6 @@ ul, ol { margin: 0; padding: 0; }
 .facts dt { font-size: 0.78rem; color: var(--muted); }
 .facts dd { margin: 2px 0 0; font-size: 0.9rem; color: #fff; }
 
-.proj-hero-media { padding-top: 24px; max-width: 1000px; }
 .proj-figure { margin: 0; }
 .proj-figure figcaption { margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
 
@@ -354,20 +353,19 @@ ul, ol { margin: 0; padding: 0; }
 .bullets li::marker { color: var(--lavender); }
 .coming-soon { color: var(--muted); font-style: italic; }
 
-.steps { list-style: none; counter-reset: step; display: grid; gap: 26px; }
-.step { counter-increment: step; }
-.step h3 { font-size: 1.05rem; margin-bottom: 0.3em; }
-.step h3::before { content: counter(step) ". "; color: var(--lavender); }
-.step p { color: var(--muted); }
-.step .proj-figure { margin-top: 12px; }
+/* Top of a case study: text left, image and store widget right (stacked on phones) */
+.proj-head-grid { display: grid; gap: 28px; }
+.proj-head-media { display: grid; gap: 14px; align-content: start; }
+.proj-overview { color: rgba(255, 255, 255, 0.88); max-width: 38rem; }
+.embed { width: 100%; }
+.embed iframe { display: block; width: 100%; border: 0; border-radius: var(--radius); }
 
-.stats {
-  list-style: none; margin: 0; padding: 20px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 18px 12px;
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-}
-.stats li { display: flex; flex-direction: column; }
-.stats .stat-num { font-size: 1.7rem; }
+/* A section: text on one side, images on the other. On phones the images simply follow the text. */
+.proj-split { display: grid; gap: 22px; }
+.proj-text { max-width: 40rem; }
+.proj-text p { color: var(--ink); }
+.proj-media { display: grid; gap: 14px; align-content: start; }
+.proj-split.no-media { grid-template-columns: 1fr; }
 
 .gallery-title { margin-bottom: 14px; }
 .gallery { display: grid; gap: 14px; }
@@ -456,9 +454,7 @@ ul, ol { margin: 0; padding: 0; }
   .hero h1 { font-size: 2.5rem; }
   .carousel-track > * { flex-basis: 44%; max-width: none; }
   .feature-stats { grid-template-columns: repeat(4, 1fr); }
-  .stats { grid-template-columns: repeat(4, 1fr); }
   .gallery { grid-template-columns: repeat(3, 1fr); }
-  .facts { grid-template-columns: repeat(4, auto); justify-content: start; gap: 14px 36px; }
   .proj-head h1 { font-size: 2.5rem; }
 }
 
@@ -503,7 +499,21 @@ ul, ol { margin: 0; padding: 0; }
   .about-grid { grid-template-columns: 1fr 220px; gap: 48px; }
   .about-media { order: 2; }
   .music-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .proj-hero-media { padding-top: 32px; }
+  .proj-head-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+  .facts { display: flex; flex-wrap: wrap; gap: 14px 36px; }
+
+  .proj-split { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: start; }
+  .proj-split.side-left { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+  .proj-split.side-left .proj-media { order: -1; }
+  .proj-split.wide-media { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); }
+  .proj-split.wide-media.side-left { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); }
+  .proj-split.no-media { grid-template-columns: 1fr; }
+  .proj-media .media { aspect-ratio: 16 / 9; }
+
+  /* "trio": one large image on the left, two stacked on the right */
+  .layout-trio { grid-template-columns: 3fr 2fr; }
+  .layout-trio .proj-figure:first-child { grid-row: 1 / span 2; display: flex; flex-direction: column; }
+  .layout-trio .proj-figure:first-child .media { flex: 1; aspect-ratio: auto; min-height: 220px; }
 }
 
 /* Phones and tablets (stacked layouts): headings and the portrait are centred;
